@@ -139,12 +139,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Orgaznim.cpp" />
+    <ClCompile Include="Organizm.cpp" />
     <ClCompile Include="Swiat.cpp" />
     <ClCompile Include="Wspolrzedne.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Orgaznim.h" />
+    <ClInclude Include="Organizm.h" />
     <ClInclude Include="Swiat.h" />
     <ClInclude Include="Wspolrzedne.h" />
   </ItemGroup>

@@ -1,8 +1,11 @@
 #include <iostream> 
+#include "Swiat.h"
+
+#define SIZE 20
 
 int main() {
-
-	std::cout << "xD!\n";
+	Swiat swiat(SIZE, SIZE);
+	swiat.Rysuj();
 
 	return 0;
 }
