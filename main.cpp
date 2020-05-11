@@ -5,7 +5,7 @@
 
 int main() {
 	Swiat swiat(SIZE, SIZE);
-	swiat.Rysuj();
+	swiat.Input();
 
 	return 0;
 }

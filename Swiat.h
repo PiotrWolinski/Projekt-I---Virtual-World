@@ -3,7 +3,6 @@
 #include "Organizm.h"
 #include "Wspolrzedne.h"
 
-
 class Swiat
 {
 	// rozmiar pola
@@ -11,19 +10,24 @@ class Swiat
 
 	// pole symulacji - dwu wymiarowa tablica wskaznikow
 	Organizm*** pole;
-	std::vector<Organizm*> DoZabicia;
+	std::vector<Organizm*> doZabicia;
 
+	std::vector<Organizm*> zwierzeta;
+
+	std::vector<Organizm*> rosliny;
 
 	void StworzPole(int rozmiarX, int rozmiarY);
 
 	void WykonajTure();
 
-
+	void Rysuj();
 	
 public:
 	Swiat(const int rozmiarX, const int rozmiarY);
 
-	void Rysuj();
+	void DodajZwierzeta();
+
+	void DodajRosliny();
 
 	void SetRozmiarY(const int y);
 
@@ -32,6 +36,8 @@ public:
 	int GetRozmiarY() const;
 
 	int GetRozmiarX() const;
+
+	void Input();
 
 };
 
