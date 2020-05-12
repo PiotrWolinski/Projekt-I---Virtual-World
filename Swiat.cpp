@@ -5,6 +5,9 @@
 #include <iomanip>
 #include <cstdlib>
 #include <ctime>
+#include <utility>
+#include <algorithm>
+
 
 Swiat::Swiat(const int rozmiarX, const int rozmiarY): rozmiarX(rozmiarX), rozmiarY(rozmiarY)
 {
@@ -66,19 +69,19 @@ void Swiat::DodajZwierzeta() {
 					this->pole[i][j] = new Antylopa(i ,j);
 					zwierzeta.push_back(this->pole[i][j]);
 					break;
-				/*case WILK:
+				/*case TRAWA:
 					this->pole[i][j] = new Wilk();
 					break;
-				case WILK:
+				case MLECZ:
 					this->pole[i][j] = new Wilk();
 					break;
-				case WILK:
+				case GUARANA:
 					this->pole[i][j] = new Wilk();
 					break;
-				case WILK:
+				case WILCZE_JAGODY:
 					this->pole[i][j] = new Wilk();
 					break;
-				case WILK:
+				case BARSZCZ_SOSNOWSKIEGO:
 					this->pole[i][j] = new Wilk();
 					break;*/
 				}
@@ -89,6 +92,7 @@ void Swiat::DodajZwierzeta() {
 
 }
 
+// metoda zmienia wskazniki na polu
 void Swiat::OdswiezPole() {
 
 	for (int i = 0; i < this->rozmiarY; ++i) {
@@ -103,9 +107,56 @@ void Swiat::OdswiezPole() {
 
 }
 
+void Swiat::SortujRosliny() {
+	for (int i = 0; i < rosliny.size(); ++i) {
+		for (int j = 0; j < rosliny.size(); ++j) {
+			if (rosliny[i]->GetWiek() < rosliny[j]->GetWiek()) {
+				std::swap(rosliny[i], rosliny[j]);
+			}
+		}
+	}
+}
+
+void Swiat::SortujZwierzeta() {
+	for (int i = 0; i < zwierzeta.size(); ++i) {
+		for (int j = 0; j < zwierzeta.size(); ++j) {
+			if (zwierzeta[i]->GetInicjatywa() < zwierzeta[j]->GetInicjatywa()) {
+				std::swap(zwierzeta[i], zwierzeta[j]);
+			}
+			else if (zwierzeta[i]->GetWiek() < zwierzeta[j]->GetWiek()) {
+				std::swap(zwierzeta[i], zwierzeta[j]);
+			}
+		}
+	}
+}
+
+void Swiat::SortujOrganizmy() {
+	SortujRosliny();
+	SortujZwierzeta();
+}
+
+void Swiat::UsunMartwe() {
+	for (auto i = zwierzeta.begin(); i != zwierzeta.end(); ++i) {
+		if (zwierzeta[*i]->GetStatus() == false) {
+			zwierzeta
+		}
+	}
+}
+
 void Swiat::WykonajTure() {
+	SortujOrganizmy();
+
+	system("cls");
+
+	Rysuj();
+
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		zwierzeta[i]->Akcja();
+
+		if (pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] != NULL) {
+			zwierzeta[i]->Kolizja(pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()]);
+		}
+
 	}
 
 	OdswiezPole();
@@ -116,14 +167,9 @@ void Swiat::Input() {
 	do {
 		if (i == 'q') break;
 
-		system("cls");
-		Rysuj();
 		WykonajTure();
-
-
 	
 	} while (std::cin >> i);
-
 }
 
 int Swiat::GetRozmiarX() const {

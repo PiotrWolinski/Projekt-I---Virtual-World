@@ -5,7 +5,7 @@
 #include "Zolw.h"
 #include "Antylopa.h"
 
-#define SPAWN_RATE 10
+#define SPAWN_RATE 50
 
 enum Organizmy {
 	WILK,

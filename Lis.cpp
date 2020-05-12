@@ -7,7 +7,8 @@ Lis::Lis(int Y, int X) {
 	this->X = X;
 	this->sila = 3;
 	this->inicjatywa = 7;
-	this->dlugoscZycia = 1;
+	this->wiek = 1;
+	this->zywy = true;
 }
 
 void Lis::Rysowanie() {

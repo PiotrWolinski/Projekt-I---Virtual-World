@@ -11,15 +11,16 @@ protected:
 	char symbol;
 	int sila;
 	int inicjatywa;
-	int dlugoscZycia;
+	int wiek;
 	Swiat *swiat;
 	int X;
 	int Y;
+	bool zywy;
 public:
 
 	virtual void Akcja() = 0;
 
-	//virtual void Kolizja() = 0;
+	virtual void Kolizja(Organizm* other) = 0;
 
 	virtual void Rysowanie() = 0;
 
@@ -34,6 +35,22 @@ public:
 	int GetY() const;
 
 	void SetY(const int Y);
-	//dodam wszystkie getery i setery
+
+	int GetSila() const;
+
+	void SetSila(int const sila);
+
+	int GetInicjatywa() const;
+
+	void SetInicjatywa(int const inicjatywa);
+
+	int GetWiek() const;
+
+	void SetWiek(int const wiek);
+
+	bool GetStatus() const;
+
+	void SetStatus(const bool status);
+
 };
 

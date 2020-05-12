@@ -12,5 +12,6 @@ Wilk::Wilk(int Y, int X) {
 	this->X = X;
 	this->sila = 9;
 	this->inicjatywa = 5;
-	this->dlugoscZycia = 1;
+	this->wiek = 1;
+	this->zywy = true;
 }

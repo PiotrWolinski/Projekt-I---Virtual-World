@@ -20,13 +20,23 @@ class Swiat
 	void WykonajTure();
 
 	void Rysuj();
-	
-public:
-	Swiat(const int rozmiarX, const int rozmiarY);
+
+	void SortujZwierzeta();
+
+	void SortujRosliny();
+
+	void SortujOrganizmy();
+
+	void OdswiezPole();
 
 	void DodajZwierzeta();
 
 	void DodajRosliny();
+	
+	void UsunMartwe();
+
+public:
+	Swiat(const int rozmiarX, const int rozmiarY);
 
 	void SetRozmiarY(const int y);
 
@@ -37,8 +47,5 @@ public:
 	int GetRozmiarX() const;
 
 	void Input();
-
-	void OdswiezPole();
-
 };
 

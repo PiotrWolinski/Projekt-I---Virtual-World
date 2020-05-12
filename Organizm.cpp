@@ -25,3 +25,35 @@ int Organizm::GetY() const {
 void Organizm::SetY(const int X) {
 	this->Y = Y;
 }
+
+int Organizm::GetSila() const {
+	return this->sila;
+}
+
+void Organizm::SetSila(const int sila){
+	this->sila = sila;
+	}
+
+int Organizm::GetInicjatywa() const {
+	return this->inicjatywa;
+}
+
+void Organizm::SetInicjatywa(const int inicjatywa) {
+	this->inicjatywa = inicjatywa;
+}
+
+int Organizm::GetWiek() const {
+	return this->wiek;
+}
+
+void Organizm::SetWiek(int wiek) {
+	this->wiek = wiek;
+}
+
+bool Organizm::GetStatus() const {
+	return this->zywy;
+}
+
+void Organizm::SetStatus(bool const status) {
+	this->zywy = status;
+}

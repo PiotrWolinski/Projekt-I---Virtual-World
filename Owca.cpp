@@ -7,7 +7,8 @@ Owca::Owca(int Y, int X) {
 	this->X = X;
 	this->sila = 4;
 	this->inicjatywa = 4;
-	this->dlugoscZycia = 1;
+	this->wiek = 1;
+	this->zywy = true;
 }
 
 void Owca::Rysowanie() {
