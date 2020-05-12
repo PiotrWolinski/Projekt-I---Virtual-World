@@ -3,5 +3,8 @@
 class Zwierze :
 	public Organizm
 {
+public:
+
+	void Akcja();
 };
 

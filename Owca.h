@@ -4,7 +4,7 @@ class Owca :
 	public Zwierze
 {
 public:
-	Owca();
+	Owca(int Y, int X);
 
 	void Rysowanie();
 };

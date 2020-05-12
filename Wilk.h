@@ -5,11 +5,9 @@ class Wilk :
 {
 public:
 
-	Wilk();
+	Wilk(int Y, int X);
 
-	/*void Akcja();
-
-	void Kolizja();*/
+	/*void Kolizja();*/
 
 	void Rysowanie();
 };

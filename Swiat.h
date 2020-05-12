@@ -7,6 +7,7 @@ class Swiat
 {
 	// rozmiar pola
 	int rozmiarX, rozmiarY;
+	int tura;
 
 	// pole symulacji - dwu wymiarowa tablica wskaznikow
 	Organizm*** pole;
@@ -15,8 +16,6 @@ class Swiat
 	std::vector<Organizm*> zwierzeta;
 
 	std::vector<Organizm*> rosliny;
-
-	void StworzPole(int rozmiarX, int rozmiarY);
 
 	void WykonajTure();
 
@@ -38,6 +37,8 @@ public:
 	int GetRozmiarX() const;
 
 	void Input();
+
+	void OdswiezPole();
 
 };
 

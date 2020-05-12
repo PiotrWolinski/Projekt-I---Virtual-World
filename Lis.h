@@ -4,7 +4,7 @@ class Lis :
 	public Zwierze
 {
 public:
-	Lis();
+	Lis(int Y, int X);
 
 	void Rysowanie();
 };

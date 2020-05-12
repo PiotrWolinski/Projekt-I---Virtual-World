@@ -4,7 +4,7 @@ class Antylopa :
 	public Zwierze
 {
 public:
-	Antylopa();
+	Antylopa(int Y, int X);
 
 	void Rysowanie();
 };
