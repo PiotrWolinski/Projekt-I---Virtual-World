@@ -7,5 +7,9 @@ public:
 	Zolw(int Y, int X);
 
 	void Rysowanie();
+
+	void Kolizja(Organizm* other);
+
+	void Akcja();
 };
 

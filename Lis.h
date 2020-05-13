@@ -7,5 +7,7 @@ public:
 	Lis(int Y, int X);
 
 	void Rysowanie();
+
+	void Akcja();
 };
 

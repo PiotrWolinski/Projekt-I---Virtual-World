@@ -16,6 +16,8 @@ protected:
 	int X;
 	int Y;
 	bool zywy;
+	int lastX;
+	int lastY;
 public:
 
 	virtual void Akcja() = 0;
@@ -51,6 +53,14 @@ public:
 	bool GetStatus() const;
 
 	void SetStatus(const bool status);
+
+	int GetLastX() const;
+
+	void SetLastX(const int X);
+
+	int GetLastY() const;
+
+	void SetLastY(const int Y);
 
 };
 

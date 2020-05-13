@@ -136,30 +136,43 @@ void Swiat::SortujOrganizmy() {
 }
 
 void Swiat::UsunMartwe() {
-	for (auto i = zwierzeta.begin(); i != zwierzeta.end(); ++i) {
-		if (zwierzeta[*i]->GetStatus() == false) {
-			zwierzeta
+	for (int i = 0; i < zwierzeta.size(); ++i) {
+		if (zwierzeta[i]->GetStatus() == false) {
+			zwierzeta.erase(zwierzeta.begin() + i);
+		}
+	}
+
+	for (int i = 0; i < rosliny.size(); ++i) {
+		if (rosliny[i]->GetStatus() == false) {
+			rosliny.erase(rosliny.begin() + i);
 		}
 	}
 }
 
 void Swiat::WykonajTure() {
+
 	SortujOrganizmy();
 
 	system("cls");
 
 	Rysuj();
 
-	for (int i = 0; i < zwierzeta.size(); ++i) {
-		zwierzeta[i]->Akcja();
+	if (this->tura != 0) {
 
-		if (pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] != NULL) {
-			zwierzeta[i]->Kolizja(pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()]);
+		for (int i = 0; i < zwierzeta.size(); ++i) {
+			zwierzeta[i]->Akcja();
+
+			if (pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] != NULL) {
+				pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()]->Kolizja(zwierzeta[i]);
+			}
 		}
-
 	}
 
+	
+	UsunMartwe();
+
 	OdswiezPole();
+	KolejnaTura();
 }
 
 void Swiat::Input() {
@@ -170,6 +183,15 @@ void Swiat::Input() {
 		WykonajTure();
 	
 	} while (std::cin >> i);
+}
+
+int Swiat::SprawdzSilePola(int const Y, int const X) {
+	if (this->pole[Y][X] == NULL) {
+		return 0;
+	}
+	else {
+		return this->pole[Y][X]->GetSila();
+	}
 }
 
 int Swiat::GetRozmiarX() const {
@@ -186,4 +208,8 @@ void Swiat::SetRozmiarX(const int X) {
 
 void Swiat::SetRozmiarY(const int Y) {
 	this->rozmiarY = Y;
+}
+
+void Swiat::KolejnaTura() {
+	this->tura++;
 }

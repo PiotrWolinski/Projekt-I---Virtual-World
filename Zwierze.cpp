@@ -12,6 +12,9 @@
 void Zwierze::Akcja() {
 	bool moved = false;
 	this->wiek++;
+
+	SetLastX(X);
+	SetLastY(Y);
 	
 	while (!moved) {
 		int dir = rand() % 4;
@@ -34,22 +37,27 @@ void Zwierze::Akcja() {
 	}
 }
 
+// kolizja jest wywolywana dla organizmu, ktory byl pierwszy na danym polu
 void Zwierze::Kolizja(Organizm* other) {
-	std::string na_polu = GetNazwaKlasy(typeid(*other).name());
+	std::string na_polu = GetNazwaKlasy(typeid(*this).name());
 
-	std::string wchodzacy = GetNazwaKlasy(typeid(*this).name());
+	std::string wchodzacy = GetNazwaKlasy(typeid(*other).name());
 	
 	if (na_polu != wchodzacy) {
-		if (other->GetSila() > this->GetSila()) {
+		if (this->GetSila() <= other->GetSila()) {
 			this->zywy = false;
+			std::cout << na_polu << " zostal zabity przez " <<  wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
-		else if (other->GetSila() < this->GetSila()) {
+		else if (this->GetSila() > other->GetSila()) {
 			other->SetStatus(false);
+			std::cout << na_polu << " zabil " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 	}
-
+	else { // rozmnazanie
+		SetX(GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
+		SetY(GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
+	}
 }
-
 
 std::string Zwierze::GetNazwaKlasy(std::string nazwa) {
 	std::istringstream ss(nazwa);
@@ -58,3 +66,4 @@ std::string Zwierze::GetNazwaKlasy(std::string nazwa) {
 	ss >> slowo;
 	return slowo;
 }
+

@@ -10,5 +10,6 @@ public:
 	void Kolizja(Organizm* other);
 
 	std::string GetNazwaKlasy(std::string nazwa);
+
 };
 

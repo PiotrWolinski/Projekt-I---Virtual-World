@@ -57,3 +57,19 @@ bool Organizm::GetStatus() const {
 void Organizm::SetStatus(bool const status) {
 	this->zywy = status;
 }
+
+void Organizm::SetLastX(int const X) {
+	this->lastX = X;
+}
+
+int Organizm::GetLastX() const {
+	return this->lastX;
+}
+
+void Organizm::SetLastY(int const Y) {
+	this->lastY = Y;
+}
+
+int Organizm::GetLastY() const {
+	return this->lastY;
+}

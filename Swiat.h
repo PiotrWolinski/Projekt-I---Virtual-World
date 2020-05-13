@@ -31,9 +31,15 @@ class Swiat
 
 	void DodajZwierzeta();
 
+	void DodajZwierze();
+
 	void DodajRosliny();
 	
+	void DodajRosline();
+	
 	void UsunMartwe();
+
+	void KolejnaTura();
 
 public:
 	Swiat(const int rozmiarX, const int rozmiarY);
@@ -47,5 +53,7 @@ public:
 	int GetRozmiarX() const;
 
 	void Input();
+
+	int SprawdzSilePola(int const Y, int const X);
 };
 
