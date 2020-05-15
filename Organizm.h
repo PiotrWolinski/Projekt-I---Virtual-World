@@ -20,7 +20,7 @@ public:
 
 	virtual void Akcja() = 0;
 
-	virtual void Kolizja(Organizm* other) = 0;
+	virtual void Kolizja(Organizm* org) = 0;
 
 	virtual void Rysowanie() = 0;
 

@@ -49,9 +49,9 @@ class Swiat
 public:
 	Swiat(const int rozmiarX, const int rozmiarY);
 
-	void SetRozmiarY(const int y);
+	void SetRozmiarY(int const y);
 
-	void SetRozmiarX(const int x);
+	void SetRozmiarX(int const x);
 
 	int GetRozmiarY() const;
 
@@ -65,7 +65,9 @@ public:
 
 	bool SprawdzCzyWolne(int const Y, int const X) const;
 
-	void DodajDoPoczekalni(std::string klasa, int const newY, int const newX);
+	void DodajZwierze(std::string klasa, int const newY, int const newX);
+
+	Organizm* GetOrganizmNaPolu(int const Y, int const X);
 
 };
 

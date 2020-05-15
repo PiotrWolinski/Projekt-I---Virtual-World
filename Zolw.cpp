@@ -50,36 +50,43 @@ void Zolw::Akcja() {
 				moved = true;
 			}
 		}
+
+		if (!this->swiat->SprawdzCzyWolne(this->Y, this->X)) {
+			this->swiat->GetOrganizmNaPolu(this->Y, this->X)->Kolizja(this);
+		}
 	}
+
 	/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " poruszyl sie na pole: (" << this->GetX() << ", " << this->GetY() << ")\n";*/
 }
 
-// kolizja jest wywolywana dla organizmu, ktory byl pierwszy na danym polu
-void Zolw::Kolizja(Organizm* other) {
+void Zolw::Kolizja(Organizm* atakujacy) {
+	Organizm* org = this->swiat->GetOrganizmNaPolu(this->Y, this->X);
+
 	std::string na_polu = GetNazwaKlasy(typeid(*this).name());
 
-	std::string wchodzacy = GetNazwaKlasy(typeid(*other).name());
+	std::string wchodzacy = GetNazwaKlasy(typeid(*atakujacy).name());
 
 	if (na_polu != wchodzacy) {
 
-		if (other->GetSila() < this->GetSila()) {
-			other->SetStatus(false);
-			std::cout << na_polu << " zabil " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+		if (atakujacy->GetSila() < this->GetSila()) {
+			atakujacy->SetStatus(false);
+			std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
-		else if (other->GetSila() < 5) {
-			other->SetX(other->GetLastX());
-			other->SetY(other->GetLastY());
-			std::cout << na_polu << " odbil atak " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+		else if (atakujacy->GetSila() < 5) {
+			atakujacy->SetX(atakujacy->GetLastX());
+			atakujacy->SetY(atakujacy->GetLastY());
+			std::cout << wchodzacy << " zostal odgoniony przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
-		else if (other->GetSila() >= 5) {
+		else if (atakujacy->GetSila() >= 5) {
 			this->zywy = false;
-			std::cout << na_polu << " zostal zabity przez " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+			std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 	}
-	else if (this != other && na_polu == wchodzacy) { // rozmnazanie
-		other->SetX(other->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
-		other->SetY(other->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
-		RozmnozSie();
-		std::cout << na_polu << " rozmnaza sie z " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+	else if (na_polu == wchodzacy && this != atakujacy) { // rozmnazanie
+
+		RozmnozSie(atakujacy);
+
+		atakujacy->SetX(atakujacy->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
+		atakujacy->SetY(atakujacy->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
 	}
 }

@@ -100,6 +100,10 @@ void Swiat::OdswiezPole() {
 			this->pole[i][j] = NULL;
 		}
 	}
+
+	for (int i = 0; i < zwierzeta.size(); ++i) {
+		this->pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] = zwierzeta[i];
+	}
 }
 
 //tutaj jest zle sortowanie
@@ -132,27 +136,9 @@ void Swiat::SortujOrganizmy() {
 	SortujZwierzeta();
 }
 
-void Swiat::DodajDoPoczekalni(std::string klasa, int const newY, int const newX) {
+void Swiat::DodajZwierze(std::string klasa, int const newY, int const newX) {
 
 	Organizm* w = NULL;
-
-		/*case TRAWA:
-			this->pole[i][j] = new Wilk();
-			break;
-		case MLECZ:
-			this->pole[i][j] = new Wilk();
-			break;
-		case GUARANA:
-			this->pole[i][j] = new Wilk();
-			break;
-		case WILCZE_JAGODY:
-			this->pole[i][j] = new Wilk();
-			break;
-		case BARSZCZ_SOSNOWSKIEGO:
-			this->pole[i][j] = new Wilk();
-			break;*/
-
-	//std::cout << this->pole[i][j]->GetX() << " " << this->pole[i][j]->GetY() << '\n';
 
 	if (klasa == "Wilk") {					// dziecko to wilk
 		w = new Wilk(newY, newX);
@@ -168,13 +154,13 @@ void Swiat::DodajDoPoczekalni(std::string klasa, int const newY, int const newX)
 	}
 	else if (klasa == "Antylopa") {			// dziecko to antylopa
 		w = new Antylopa(newY, newX);
-		
 	}
 
-	if (w != nullptr) {
+	if (w != NULL) {
 		w->SetRozmnozylSie(true);
 		w->SetSwiat(this);
-		poczekalnia.push_back(w);
+		zwierzeta.push_back(w);
+		SortujZwierzeta();
 	}
 }
 
@@ -211,16 +197,12 @@ void Swiat::WykonajTure() {
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		zwierzeta[i]->Akcja();
 
-		if (pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] != NULL) {
-			pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()]->Kolizja(zwierzeta[i]);
-		}
-
 		UsunMartwe();
 
 		OdswiezPole();
 	}
 
-	DodajOrganizmy();
+	//DodajOrganizmy();
 
 	KolejnaTura();
 }
@@ -268,7 +250,6 @@ void Swiat::KolejnaTura() {
 	this->tura++;
 
 	for (int i = 0; i < zwierzeta.size(); ++i) {
-		this->pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] = zwierzeta[i];
 		zwierzeta[i]->SetRozmnozylSie(false);
 	}
 }
@@ -280,4 +261,8 @@ bool Swiat::SprawdzCzyWolne(int const Y, int const X) const {
 	else {
 		return false;
 	}
+}
+
+Organizm* Swiat::GetOrganizmNaPolu(int const Y, int const X) {
+	return this->pole[Y][X];
 }

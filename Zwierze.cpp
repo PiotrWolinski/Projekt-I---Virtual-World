@@ -35,30 +35,36 @@ void Zwierze::Akcja() {
 			moved = true;
 		}
 	}
+
 	/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " poruszyl sie na pole: (" << this->GetX() << ", " << this->GetY() << ")\n";*/
+
+	if (!this->swiat->SprawdzCzyWolne(this->Y, this->X)) {
+		this->swiat->GetOrganizmNaPolu(this->Y, this->X)->Kolizja(this);
+	}
 }
 
-// kolizja jest wywolywana dla organizmu, ktory byl pierwszy na danym polu
-void Zwierze::Kolizja(Organizm* other) {
+void Zwierze::Kolizja(Organizm* atakujacy) {
+
 	std::string na_polu = GetNazwaKlasy(typeid(*this).name());
 
-	std::string wchodzacy = GetNazwaKlasy(typeid(*other).name());
-	
+	std::string wchodzacy = GetNazwaKlasy(typeid(*atakujacy).name()); 
+
 	if (na_polu != wchodzacy) {
-		if (this->GetSila() <= other->GetSila()) {
+		if (this->GetSila() <= atakujacy->GetSila()) {
 			this->zywy = false;
-			std::cout << na_polu << " zostal zabity przez " <<  wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+			std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
-		else if (this->GetSila() > other->GetSila()) {
-			other->SetStatus(false);
-			std::cout << na_polu << " zabil " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+		else if (this->GetSila() > atakujacy->GetSila()) {
+			atakujacy->SetStatus(false);
+			std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 	}
-	else if (na_polu == wchodzacy && this != other) { // rozmnazanie
-		other->SetX(other->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
-		other->SetY(other->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
-		RozmnozSie();
-		std::cout << na_polu << " rozmnaza sie z " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+	else if (na_polu == wchodzacy && this != atakujacy) { // rozmnazanie
+
+		this->RozmnozSie(atakujacy);
+
+		atakujacy->SetX(atakujacy->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
+		atakujacy->SetY(atakujacy->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
 	}
 }
 
@@ -70,62 +76,44 @@ std::string Zwierze::GetNazwaKlasy(std::string nazwa) {
 	return slowo;
 }
 
-void Zwierze::RozmnozSie() {
-	if (this->rozmnozylSie == false && this->GetWiek() > 5) {
+void Zwierze::RozmnozSie(Organizm* wchodzacy) {
+	if (this->rozmnozylSie == false && wchodzacy->GetRozmnozylSie() == false && this->GetWiek() > 5 && wchodzacy->GetWiek() > 5) {
 
 		bool rozmnozony = false;
-		int proby = 0;
 
 		int newX = this->X;
 		int newY = this->Y;
 
-		while (!rozmnozony && proby != 4) {
-			int dir = rand() % 4;
-			if (dir == 0 && this->Y > 0) {											// sprawdzam gore
-				if (this->swiat->SprawdzCzyWolne(this->Y - 1, this->X)) {
-					newY--;
-					rozmnozony = true;
-					break;
-				}
-				else {
-					proby++;
-				}
-			}
-			else if (dir == 1 && this->X < this->swiat->GetRozmiarX() - 1) {		// sprawdzam prawo
-				if (this->swiat->SprawdzCzyWolne(this->Y, this->X + 1)) {
-					newX++;
-					rozmnozony = true;
-					break;
-				}
-				else {
-					proby++;
-				}
-			}
-			else if (dir == 2 && this->Y < this->swiat->GetRozmiarY() - 1) {		// sprawdzam dol
-				if (this->swiat->SprawdzCzyWolne(this->Y + 1, this->X)) {
-					newY++;
-					rozmnozony = true;
-					break;
-				}
-				else {
-					proby++;
-				}
-			}
-			else if (dir == 3 && this->X > 0) {										// sprawdzam lewo
-				if (this->swiat->SprawdzCzyWolne(this->Y, this->X - 1)) {
-					newX--;
-					rozmnozony = true;
-					break;
-				}
-				else {
-					proby++;
-				}
-			}
+		if (this->Y > 0 && this->swiat->SprawdzCzyWolne(this->Y - 1, this->X)) {										// sprawdzam gore
+			newY--;
+			rozmnozony = true;
+		}
+		else if (this->X < this->swiat->GetRozmiarX() - 1 && this->swiat->SprawdzCzyWolne(this->Y, this->X + 1)) {		// sprawdzam prawo
+			newX++;
+			rozmnozony = true;
+		}
+		else if (this->Y < this->swiat->GetRozmiarY() - 1 && this->swiat->SprawdzCzyWolne(this->Y + 1, this->X)) {		// sprawdzam dol
+			newY++;
+			rozmnozony = true;
+		}
+		else if (this->X > 0 && this->swiat->SprawdzCzyWolne(this->Y, this->X - 1)) {									// sprawdzam lewo
+			newX--;
+			rozmnozony = true;
 		}
 
-		this->swiat->DodajDoPoczekalni(this->GetNazwaKlasy(typeid(*this).name()), newY, newX);
-		//std::cout << this->GetNazwaKlasy(typeid(*this).name());
+		if (rozmnozony) {
+			this->swiat->DodajZwierze(this->GetNazwaKlasy(typeid(*this).name()), newY, newX);
+			//std::cout << this->GetNazwaKlasy(typeid(*this).name());
+			std::cout << GetNazwaKlasy(typeid(*wchodzacy).name()) << " ma potomka na polu " << newX << ' ' << newY << '\n';
+		}
+		else {
+			std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << ", " << this->GetY() << '\n';
+		}
 
 		this->SetRozmnozylSie(true);
+		wchodzacy->SetRozmnozylSie(true);
+	} 
+	else {
+		std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << ", " << this->GetY() << '\n';
 	}
 }

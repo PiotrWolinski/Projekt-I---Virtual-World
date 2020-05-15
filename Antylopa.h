@@ -10,6 +10,6 @@ public:
 
 	void Akcja();
 
-	void Kolizja(Organizm* other);
+	void Kolizja(Organizm* atakujacy);
 };
 

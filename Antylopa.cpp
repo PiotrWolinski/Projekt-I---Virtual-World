@@ -72,34 +72,39 @@ void Antylopa::Akcja() {
 		}
 	}
 	/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " poruszyl sie na pole: (" << this->GetX() << ", " << this->GetY() << ")\n";*/
+
+	if (!this->swiat->SprawdzCzyWolne(this->Y, this->X)) {
+		this->swiat->GetOrganizmNaPolu(this->Y, this->X)->Kolizja(this);
+	}
 }
 
-void Antylopa::Kolizja(Organizm* other) {
+void Antylopa::Kolizja(Organizm* atakujacy) {
 	std::string na_polu = GetNazwaKlasy(typeid(*this).name());
 
-	std::string wchodzacy = GetNazwaKlasy(typeid(*other).name());
+	std::string wchodzacy = GetNazwaKlasy(typeid(*atakujacy).name());
 
 	int uciekaj = rand() % 2;
 
-	if (na_polu == wchodzacy && this != other) {	 // rozmnazanie
-		other->SetX(other->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
-		other->SetY(other->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
-		RozmnozSie();
-		std::cout << na_polu << " rozmnaza sie z " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+	if (na_polu == wchodzacy && this != atakujacy) {	 // rozmnazanie
+
+		RozmnozSie(atakujacy);
+
+		atakujacy->SetX(atakujacy->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
+		atakujacy->SetY(atakujacy->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
 	}
-	else if (!uciekaj && this != other) {
+	else if (!uciekaj && this != atakujacy) {
 		if (na_polu != wchodzacy) {
-			if (this->GetSila() <= other->GetSila()) {
+			if (this->GetSila() <= atakujacy->GetSila()) {
 				this->zywy = false;
-				std::cout << na_polu << " zostal zabity przez " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+				std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
-			else if (this->GetSila() > other->GetSila()) {
-				other->SetStatus(false);
-				std::cout << na_polu << " zabil " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+			else if (this->GetSila() > atakujacy->GetSila()) {
+				atakujacy->SetStatus(false);
+				std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 		}
 	}
-	else if (!uciekaj && this != other) {						// czas na ucieczke
+	else if (uciekaj && this != atakujacy) {						// czas na ucieczke
 		bool moved = false;
 
 		SetLastX(this->X);
@@ -149,17 +154,17 @@ void Antylopa::Kolizja(Organizm* other) {
 
 		if (moved == false) {
 
-			if (this->GetSila() <= other->GetSila()) {
+			if (this->GetSila() <= atakujacy->GetSila()) {
 				this->zywy = false;
-				std::cout << na_polu << " nie uciekla " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+				std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
-			else if (this->GetSila() > other->GetSila()) {
-				other->SetStatus(false);
-				std::cout << na_polu << " zabil " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+			else if (this->GetSila() > atakujacy->GetSila()) {
+				atakujacy->SetStatus(false);
+				std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 		}
 		else {
-			std::cout << na_polu << " uciekla od " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+			std::cout << wchodzacy << " nie dogonil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 	}
 }

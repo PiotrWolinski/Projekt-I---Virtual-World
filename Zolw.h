@@ -8,7 +8,7 @@ public:
 
 	void Rysowanie();
 
-	void Kolizja(Organizm* other);
+	void Kolizja(Organizm* atakujacy);
 
 	void Akcja();
 };

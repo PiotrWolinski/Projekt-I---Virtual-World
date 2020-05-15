@@ -7,11 +7,11 @@ class Zwierze :
 public:
 	void Akcja();
 
-	void Kolizja(Organizm* other);
+	void Kolizja(Organizm* org);
 
 	std::string GetNazwaKlasy(std::string nazwa);
 
-	void RozmnozSie();
+	void RozmnozSie(Organizm* org);
 
 };
 
