@@ -11,6 +11,10 @@ Lis::Lis(int Y, int X) {
 	this->inicjatywa = 7;
 	this->wiek = 1;
 	this->zywy = true;
+	this->rozmnozylSie = false;
+
+	SetLastX(this->X);
+	SetLastY(this->Y);
 }
 
 void Lis::Rysowanie() {
@@ -21,12 +25,12 @@ void Lis::Akcja() {
 	bool moved = false;
 	this->wiek++;
 
-	SetLastX(X);
-	SetLastY(Y);
+	SetLastX(this->X);
+	SetLastY(this->Y);
 
-	int counter = 0;
+	int moves = 0;
 
-	while (!moved && counter != 4) {
+	while (!moved && moves != 4) {
 		int dir = rand() % 4;
 		if (dir == 0 && this->Y > 0) {											// w gore
 			if (this->swiat->SprawdzSilePola(this->Y - 1, this->X) <= this->sila) {
@@ -34,7 +38,7 @@ void Lis::Akcja() {
 				moved = true;
 			}
 			else {
-				counter++;
+				moves++;
 			}
 		}
 		else if (dir == 1 && this->X < this->swiat->GetRozmiarX() - 1) {		// w prawo
@@ -43,7 +47,7 @@ void Lis::Akcja() {
 				moved = true;
 			}
 			else {
-				counter++;
+				moves++;
 			}
 		}
 		else if (dir == 2 && this->Y < this->swiat->GetRozmiarY() - 1) {		// w dol
@@ -52,7 +56,7 @@ void Lis::Akcja() {
 				moved = true;
 			}
 			else {
-				counter++;
+				moves++;
 			}
 		}
 		else if (dir == 3 && this->X > 0) {										// w lewo
@@ -61,8 +65,9 @@ void Lis::Akcja() {
 				moved = true;
 			}
 			else {
-				counter++;
+				moves++;
 			}
 		}
 	}
+	/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " poruszyl sie na pole: (" << this->GetX() << ", " << this->GetY() << ")\n";*/
 }

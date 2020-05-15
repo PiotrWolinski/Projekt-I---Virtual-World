@@ -1,6 +1,4 @@
 #pragma once
-#include "Wspolrzedne.h"
-//#include "Swiat.h"
 
 class Swiat;
 
@@ -8,7 +6,6 @@ class Organizm
 {
 protected:
 	int id;
-	char symbol;
 	int sila;
 	int inicjatywa;
 	int wiek;
@@ -18,6 +15,7 @@ protected:
 	bool zywy;
 	int lastX;
 	int lastY;
+	bool rozmnozylSie;
 public:
 
 	virtual void Akcja() = 0;
@@ -62,5 +60,8 @@ public:
 
 	void SetLastY(const int Y);
 
+	bool GetRozmnozylSie() const;
+
+	void SetRozmnozylSie(bool const rozmnozylSie);
 };
 

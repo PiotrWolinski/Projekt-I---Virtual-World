@@ -11,6 +11,10 @@ Zolw::Zolw(int Y, int X) {
 	this->inicjatywa = 1;
 	this->wiek = 1;
 	this->zywy = true;
+	this->rozmnozylSie = false;
+
+	SetLastX(this->X);
+	SetLastY(this->Y);
 }
 
 void Zolw::Rysowanie() {
@@ -21,11 +25,12 @@ void Zolw::Akcja() {
 	bool moved = false;
 	this->wiek++;
 
-	SetLastX(X);
-	SetLastY(Y);
-
 	int shouldIMove = rand() % 4;
 	if (shouldIMove == 0) {
+
+		SetLastX(this->X);
+		SetLastY(this->Y);
+
 		while (!moved) {
 			int dir = rand() % 4;
 			if (dir == 0 && this->Y > 0) {											// w gore
@@ -46,6 +51,7 @@ void Zolw::Akcja() {
 			}
 		}
 	}
+	/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " poruszyl sie na pole: (" << this->GetX() << ", " << this->GetY() << ")\n";*/
 }
 
 // kolizja jest wywolywana dla organizmu, ktory byl pierwszy na danym polu
@@ -70,8 +76,10 @@ void Zolw::Kolizja(Organizm* other) {
 			std::cout << na_polu << " zostal zabity przez " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 	}
-	else { // rozmnazanie
-		SetX(GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
-		SetY(GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
+	else if (this != other && na_polu == wchodzacy) { // rozmnazanie
+		other->SetX(other->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
+		other->SetY(other->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
+		RozmnozSie();
+		std::cout << na_polu << " rozmnaza sie z " << wchodzacy << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 	}
 }

@@ -4,10 +4,7 @@ class Wilk :
 	public Zwierze
 {
 public:
-
 	Wilk(int Y, int X);
-
-	/*void Kolizja();*/
 
 	void Rysowanie();
 };

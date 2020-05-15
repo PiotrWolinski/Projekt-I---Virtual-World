@@ -22,7 +22,7 @@ int Organizm::GetY() const {
 	return this->Y;
 }
 
-void Organizm::SetY(const int X) {
+void Organizm::SetY(const int Y) {
 	this->Y = Y;
 }
 
@@ -72,4 +72,12 @@ void Organizm::SetLastY(int const Y) {
 
 int Organizm::GetLastY() const {
 	return this->lastY;
+}
+
+void Organizm::SetRozmnozylSie(bool const rozmnozylSie) {
+	this->rozmnozylSie = rozmnozylSie;
+}
+
+bool Organizm::GetRozmnozylSie() const{
+	return this->rozmnozylSie;
 }

@@ -7,5 +7,9 @@ public:
 	Antylopa(int Y, int X);
 
 	void Rysowanie();
+
+	void Akcja();
+
+	void Kolizja(Organizm* other);
 };
 

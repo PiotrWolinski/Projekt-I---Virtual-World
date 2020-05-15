@@ -11,5 +11,7 @@ public:
 
 	std::string GetNazwaKlasy(std::string nazwa);
 
+	void RozmnozSie();
+
 };
 

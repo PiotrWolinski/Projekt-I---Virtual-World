@@ -9,6 +9,10 @@ Owca::Owca(int Y, int X) {
 	this->inicjatywa = 4;
 	this->wiek = 1;
 	this->zywy = true;
+	this->rozmnozylSie = false;
+
+	SetLastX(this->X);
+	SetLastY(this->Y);
 }
 
 void Owca::Rysowanie() {

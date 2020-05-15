@@ -1,7 +1,10 @@
 #pragma once
-#include <vector>
 #include "Organizm.h"
 #include "Wspolrzedne.h"
+
+
+#include <string>
+#include <vector>
 
 class Swiat
 {
@@ -17,6 +20,8 @@ class Swiat
 
 	std::vector<Organizm*> rosliny;
 
+	std::vector<Organizm*> poczekalnia;
+
 	void WykonajTure();
 
 	void Rysuj();
@@ -31,11 +36,11 @@ class Swiat
 
 	void DodajZwierzeta();
 
-	void DodajZwierze();
-
 	void DodajRosliny();
 	
 	void DodajRosline();
+
+	void DodajOrganizmy();
 	
 	void UsunMartwe();
 
@@ -54,6 +59,13 @@ public:
 
 	void Input();
 
-	int SprawdzSilePola(int const Y, int const X);
+	int GetTura() const;
+
+	int SprawdzSilePola(int const Y, int const X) const;
+
+	bool SprawdzCzyWolne(int const Y, int const X) const;
+
+	void DodajDoPoczekalni(std::string klasa, int const newY, int const newX);
+
 };
 
