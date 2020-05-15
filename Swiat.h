@@ -20,8 +20,6 @@ class Swiat
 
 	std::vector<Organizm*> rosliny;
 
-	std::vector<Organizm*> poczekalnia;
-
 	void WykonajTure();
 
 	void Rysuj();
@@ -29,16 +27,6 @@ class Swiat
 	void SortujZwierzeta();
 
 	void SortujRosliny();
-
-	void SortujOrganizmy();
-
-	void OdswiezPole();
-
-	void DodajZwierzeta();
-
-	void DodajRosliny();
-	
-	void DodajRosline();
 
 	void DodajOrganizmy();
 	
@@ -66,6 +54,10 @@ public:
 	bool SprawdzCzyWolne(int const Y, int const X) const;
 
 	void DodajZwierze(std::string klasa, int const newY, int const newX);
+
+	void DodajRosline(std::string klasa, int const newY, int const newX);
+
+	void OdswiezPole();
 
 	Organizm* GetOrganizmNaPolu(int const Y, int const X);
 

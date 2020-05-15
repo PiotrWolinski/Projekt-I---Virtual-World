@@ -17,15 +17,20 @@ Swiat::Swiat(const int rozmiarX, const int rozmiarY): rozmiarX(rozmiarX), rozmia
 		this->pole[i] = new Organizm * [this->rozmiarX]{};
 	}
 
-	DodajZwierzeta();
+	DodajOrganizmy();
 
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		zwierzeta[i]->SetSwiat(this);
 	}
 
-	this->tura = 0;
+	for (int i = 0; i < rosliny.size(); ++i) {
+		rosliny[i]->SetSwiat(this);
+	}
 
-	SortujOrganizmy();
+	this->tura = 0;
+	
+	SortujZwierzeta();
+	SortujRosliny();
 }
 
 void Swiat::Rysuj() {
@@ -33,7 +38,7 @@ void Swiat::Rysuj() {
 	for (int i = 0; i < this->rozmiarY; ++i) {
 		for (int j = 0; j < this->rozmiarX; ++j) {
 			if (pole[i][j] != NULL) {
-				//wywolaj metode danego zwierzatka
+				//wywolaj metode danego organizmu
 				pole[i][j]->Rysowanie();
 			}
 			else {
@@ -44,12 +49,12 @@ void Swiat::Rysuj() {
 	}
 }
 
-void Swiat::DodajZwierzeta() {
+void Swiat::DodajOrganizmy() {
 	for (int i = 0; i < this->rozmiarY; ++i) {
 		for (int j = 0; j < this->rozmiarX; ++j) {
 			int rand1 = rand() % 100;
-			if (rand1 < SPAWN_RATE) {
-				int rand2 = rand() % SUMA_ORGANIZMOW / 2;
+			if (rand1 < SPAWN_RATE_Z) {
+				int rand2 = rand() % SUMA_ORGANIZMOW;
 				switch (rand2) {
 				case WILK:
 					this->pole[i][j] = new Wilk(i, j);
@@ -71,21 +76,26 @@ void Swiat::DodajZwierzeta() {
 					this->pole[i][j] = new Antylopa(i ,j);
 					zwierzeta.push_back(this->pole[i][j]);
 					break;
-				/*case TRAWA:
-					this->pole[i][j] = new Wilk();
+				case TRAWA:
+					this->pole[i][j] = new Trawa(i, j);
+					rosliny.push_back(this->pole[i][j]);
 					break;
 				case MLECZ:
-					this->pole[i][j] = new Wilk();
+					this->pole[i][j] = new Mlecz(i, j);
+					rosliny.push_back(this->pole[i][j]);
 					break;
 				case GUARANA:
-					this->pole[i][j] = new Wilk();
+					this->pole[i][j] = new Guarana(i, j);
+					rosliny.push_back(this->pole[i][j]);
 					break;
 				case WILCZE_JAGODY:
-					this->pole[i][j] = new Wilk();
+					this->pole[i][j] = new WilczeJagody(i, j);
+					rosliny.push_back(this->pole[i][j]);
 					break;
 				case BARSZCZ_SOSNOWSKIEGO:
-					this->pole[i][j] = new Wilk();
-					break;*/
+					this->pole[i][j] = new BarszczSosnowskiego(i ,j);
+					rosliny.push_back(this->pole[i][j]);
+					break;
 				}
 				//std::cout << this->pole[i][j]->GetX() << " " << this->pole[i][j]->GetY() << '\n';
 			}
@@ -104,55 +114,58 @@ void Swiat::OdswiezPole() {
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		this->pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] = zwierzeta[i];
 	}
+
+	for (int i = 0; i < rosliny.size(); ++i) {
+		this->pole[rosliny[i]->GetY()][rosliny[i]->GetX()] = rosliny[i];
+	}
 }
 
 //tutaj jest zle sortowanie
 void Swiat::SortujRosliny() {
-	for (int i = 0; i < rosliny.size(); ++i) {
-		for (int j = 0; j < rosliny.size(); ++j) {
-			if (rosliny[i]->GetWiek() < rosliny[j]->GetWiek()) {
-				std::swap(rosliny[i], rosliny[j]);
+	if (rosliny.size() > 0) {
+		for (int i = 0; i < rosliny.size(); ++i) {
+			for (int j = 0; j < rosliny.size(); ++j) {
+				if (rosliny[i]->GetWiek() < rosliny[j]->GetWiek()) {
+					std::swap(rosliny[i], rosliny[j]);
+				}
 			}
 		}
-	}
+	}	
 }
 
 void Swiat::SortujZwierzeta() {
-	for (int i = 0; i < zwierzeta.size() - 1; ++i) {
-		for (int j = 0; j < zwierzeta.size() - i - 1; ++j) {
-			if (zwierzeta[j]->GetInicjatywa() < zwierzeta[j + 1]->GetInicjatywa()) {
-				std::swap(zwierzeta[j], zwierzeta[j + 1]);
-			}
-			else if (zwierzeta[j]->GetWiek() < zwierzeta[j + 1]->GetWiek() && 
-				zwierzeta[j]->GetInicjatywa() == zwierzeta[j + 1]->GetInicjatywa()) {
-				std::swap(zwierzeta[j], zwierzeta[j + 1]);
+	if (zwierzeta.size() > 0) {
+		for (int i = 0; i < zwierzeta.size() - 1; ++i) {
+			for (int j = 0; j < zwierzeta.size() - i - 1; ++j) {
+				if (zwierzeta[j]->GetInicjatywa() < zwierzeta[j + 1]->GetInicjatywa()) {
+					std::swap(zwierzeta[j], zwierzeta[j + 1]);
+				}
+				else if (zwierzeta[j]->GetWiek() < zwierzeta[j + 1]->GetWiek() &&
+					zwierzeta[j]->GetInicjatywa() == zwierzeta[j + 1]->GetInicjatywa()) {
+					std::swap(zwierzeta[j], zwierzeta[j + 1]);
+				}
 			}
 		}
-	}
-}
-
-void Swiat::SortujOrganizmy() {
-	SortujRosliny();
-	SortujZwierzeta();
+	}	
 }
 
 void Swiat::DodajZwierze(std::string klasa, int const newY, int const newX) {
 
 	Organizm* w = NULL;
 
-	if (klasa == "Wilk") {					// dziecko to wilk
+	if (klasa == "Wilk") {							// dziecko to wilk
 		w = new Wilk(newY, newX);
 	}
-	else if (klasa == "Owca") {				// dziecko to owca
+	else if (klasa == "Owca") {						// dziecko to owca
 		w = new Owca(newY, newX);
 	}
-	else if (klasa == "Lis") {				// dziecko to lis
+	else if (klasa == "Lis") {						// dziecko to lis
 		w = new Lis(newY, newX);
 	}
-	else if (klasa == "Zolw") {				// dziecko to zolw
+	else if (klasa == "Zolw") {						// dziecko to zolw
 		w = new Zolw(newY, newX);
 	}
-	else if (klasa == "Antylopa") {			// dziecko to antylopa
+	else if (klasa == "Antylopa") {					// dziecko to antylopa
 		w = new Antylopa(newY, newX);
 	}
 
@@ -164,10 +177,31 @@ void Swiat::DodajZwierze(std::string klasa, int const newY, int const newX) {
 	}
 }
 
-void Swiat::DodajOrganizmy() {
-	for (int i = 0; i < poczekalnia.size(); ++i) {
-		zwierzeta.push_back(poczekalnia[i]);
-		poczekalnia.erase(poczekalnia.begin() + i);
+void Swiat::DodajRosline(std::string klasa, int const newY, int const newX) {
+
+	Organizm* w = NULL;
+
+	if (klasa == "Trawa") {							// sadzi trawe
+		w = new Trawa(newY, newX);
+	}
+	else if (klasa == "Mlecz") {					// sadzi mlecza
+		w = new Mlecz(newY, newX);
+	}
+	else if (klasa == "Guarana") {					// sadzi guarane
+		w = new Guarana(newY, newX);
+	}
+	else if (klasa == "WilczeJagody") {				// sadzi wilcze jagody
+		w = new WilczeJagody(newY, newX);
+	}
+	else if (klasa == "BarszczSosnowskiego") {		// dziecko to barszcz sosnowskiego
+		w = new BarszczSosnowskiego(newY, newX);
+	}
+
+	if (w != NULL) {
+		w->SetRozmnozylSie(true);
+		w->SetSwiat(this);
+		rosliny.push_back(w);
+		SortujRosliny();
 	}
 }
 
@@ -188,7 +222,8 @@ void Swiat::UsunMartwe() {
 
 void Swiat::WykonajTure() {
 
-	SortujOrganizmy();
+	SortujRosliny();
+	SortujZwierzeta();
 
 	system("cls");
 
@@ -201,9 +236,13 @@ void Swiat::WykonajTure() {
 
 		OdswiezPole();
 	}
+	for (int i = 0; i < rosliny.size(); ++i) {
+		rosliny[i]->Akcja();
 
-	//DodajOrganizmy();
+		UsunMartwe();
 
+		OdswiezPole();
+	}
 	KolejnaTura();
 }
 
@@ -251,6 +290,10 @@ void Swiat::KolejnaTura() {
 
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		zwierzeta[i]->SetRozmnozylSie(false);
+	}
+
+	for (int i = 0; i < rosliny.size(); ++i) {
+		rosliny[i]->SetRozmnozylSie(false);
 	}
 }
 

@@ -9,9 +9,6 @@ public:
 
 	void Kolizja(Organizm* org);
 
-	std::string GetNazwaKlasy(std::string nazwa);
-
 	void RozmnozSie(Organizm* org);
-
 };
 

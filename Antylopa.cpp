@@ -164,7 +164,7 @@ void Antylopa::Kolizja(Organizm* atakujacy) {
 			}
 		}
 		else {
-			std::cout << wchodzacy << " nie dogonil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+			std::cout << wchodzacy << " nie dogonil " << na_polu << " na polu " << atakujacy->GetX() << ' ' << atakujacy->GetY() << '\n';
 		}
 	}
 }

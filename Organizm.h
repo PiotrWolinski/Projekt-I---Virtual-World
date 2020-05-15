@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 
 class Swiat;
 
@@ -63,5 +64,7 @@ public:
 	bool GetRozmnozylSie() const;
 
 	void SetRozmnozylSie(bool const rozmnozylSie);
+
+	std::string GetNazwaKlasy(std::string nazwa);
 };
 

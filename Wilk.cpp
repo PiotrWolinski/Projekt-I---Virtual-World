@@ -1,7 +1,6 @@
 #include "Wilk.h"
 #include <iostream>
 #include <iomanip>
-#include <initializer_list>
 
 void Wilk::Rysowanie() {
 	std::cout << std::setw(2) << 'W' << ' ';

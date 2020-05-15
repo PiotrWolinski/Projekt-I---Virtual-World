@@ -4,8 +4,17 @@
 #include "Lis.h"
 #include "Zolw.h"
 #include "Antylopa.h"
+#include "Trawa.h"
+#include "Mlecz.h"
+#include "Guarana.h"
+#include "WilczeJagody.h"
+#include "BarszczSosnowskiego.h"
 
-#define SPAWN_RATE 20
+#define SPAWN_RATE_Z 20
+
+#define SPAWN_RATE_R 10
+
+#define ZASIEWANIE 10
 
 enum Organizmy {
 	WILK,

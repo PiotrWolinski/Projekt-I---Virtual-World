@@ -1,6 +1,8 @@
 #include "Organizm.h"
 #include <cstdlib>
 #include <utility>
+#include <string>
+#include <sstream>
 
 void Organizm::SetSwiat(Swiat *swiat) {
 	this->swiat = swiat;
@@ -80,4 +82,12 @@ void Organizm::SetRozmnozylSie(bool const rozmnozylSie) {
 
 bool Organizm::GetRozmnozylSie() const{
 	return this->rozmnozylSie;
+}
+
+std::string Organizm::GetNazwaKlasy(std::string nazwa) {
+	std::istringstream ss(nazwa);
+	std::string slowo;
+	ss >> slowo;
+	ss >> slowo;
+	return slowo;
 }

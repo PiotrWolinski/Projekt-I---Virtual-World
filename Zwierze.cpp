@@ -1,12 +1,10 @@
 #include "Zwierze.h"
 #include "Swiat.h"
 
-
 #include <ctime>
 #include <cstdlib>
 #include <typeinfo>
 #include <string>
-#include <sstream>
 #include <iostream>
 
 void Zwierze::Akcja() {
@@ -68,14 +66,6 @@ void Zwierze::Kolizja(Organizm* atakujacy) {
 	}
 }
 
-std::string Zwierze::GetNazwaKlasy(std::string nazwa) {
-	std::istringstream ss(nazwa);
-	std::string slowo;
-	ss >> slowo;
-	ss >> slowo;
-	return slowo;
-}
-
 void Zwierze::RozmnozSie(Organizm* wchodzacy) {
 	if (this->rozmnozylSie == false && wchodzacy->GetRozmnozylSie() == false && this->GetWiek() > 5 && wchodzacy->GetWiek() > 5) {
 
@@ -107,13 +97,13 @@ void Zwierze::RozmnozSie(Organizm* wchodzacy) {
 			std::cout << GetNazwaKlasy(typeid(*wchodzacy).name()) << " ma potomka na polu " << newX << ' ' << newY << '\n';
 		}
 		else {
-			std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << ", " << this->GetY() << '\n';
+			std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << " " << this->GetY() << '\n';
 		}
 
 		this->SetRozmnozylSie(true);
 		wchodzacy->SetRozmnozylSie(true);
 	} 
 	else {
-		std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << ", " << this->GetY() << '\n';
+		std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << " " << this->GetY() << '\n';
 	}
 }
