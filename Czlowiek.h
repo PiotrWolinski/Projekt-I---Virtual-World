@@ -3,5 +3,9 @@
 class Czlowiek :
 	public Zwierze
 {
+public:
+	Czlowiek();
+
+	void Akcja();
 };
 

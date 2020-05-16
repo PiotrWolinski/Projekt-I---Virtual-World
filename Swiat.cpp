@@ -8,6 +8,7 @@
 #include <utility>
 #include <algorithm>
 #include <string>
+#include <conio.h>
 
 
 Swiat::Swiat(const int rozmiarX, const int rozmiarY): rozmiarX(rozmiarX), rozmiarY(rozmiarY)
@@ -112,11 +113,15 @@ void Swiat::OdswiezPole() {
 	}
 
 	for (int i = 0; i < zwierzeta.size(); ++i) {
-		this->pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] = zwierzeta[i];
+		if (zwierzeta[i]->GetStatus()) {
+			this->pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] = zwierzeta[i];
+		}
 	}
 
 	for (int i = 0; i < rosliny.size(); ++i) {
-		this->pole[rosliny[i]->GetY()][rosliny[i]->GetX()] = rosliny[i];
+		if (rosliny[i]->GetStatus()) {
+			this->pole[rosliny[i]->GetY()][rosliny[i]->GetX()] = rosliny[i];
+		}
 	}
 }
 
@@ -249,11 +254,19 @@ void Swiat::WykonajTure() {
 void Swiat::Input() {
 	char i = ' ';
 	do {
-		if (i == 'q') break;
+		if (this->tura == 0) {
+			std::cout << "Witam w projekcie pierwszym z Programowania Obiektowego. Ponizej krotki opis funkcjonalnosci:\n\n";
+			std::cout << "\tt - przechodzi do nastepnej tury\n\n";
+			std::cout << "\ts - aktywuje specjalna umiejetnosc czlowieka\n\n";
+			std::cout << "\tq - wyjscie z symulacji\n\n";
+			std::cout << "Kazde polecenie powinno sie zaczynac od podania kierunku ruchu dla czlowieka przy uzyciu strzalek\n\n";
+			std::cout << "Nacisnij klawisz t i enter, zeby przejsc do symulacji\n";
+		}
+		std::cin >> i;
 
 		WykonajTure();
 	
-	} while (std::cin >> i);
+	} while (i == 't');
 }
 
 int Swiat::SprawdzSilePola(int const Y, int const X) const {

@@ -2,7 +2,7 @@
 #include "Swiat.h"
 #include <ctime>
 
-#define SIZE 10
+#define SIZE 20
 
 int main() {
 	srand(time(NULL));

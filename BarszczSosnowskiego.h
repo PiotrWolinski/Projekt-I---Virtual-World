@@ -6,6 +6,8 @@ class BarszczSosnowskiego :
 public:
 	BarszczSosnowskiego(int Y, int X);
 
+	void Akcja();
+
 	void Rysowanie();
 
 	void Kolizja(Organizm* org);
