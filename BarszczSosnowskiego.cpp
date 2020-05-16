@@ -22,42 +22,66 @@ void BarszczSosnowskiego::Rysowanie() {
 
 void BarszczSosnowskiego::Akcja() {
 
+	std::string komentarz = "";
+
 	if (this->Y > 0) {											// w gore
-		if (!this->swiat->SprawdzCzyWolne(this->Y - 1, this->X) && this->swiat->GetOrganizmNaPolu(this->Y - 1, this->X)->GetInicjatywa() != 0) {
+		if (!this->swiat->SprawdzCzyWolne(this->Y - 1, this->X) && 
+			this->swiat->GetOrganizmNaPolu(this->Y - 1, this->X)->GetInicjatywa() != 0) {
 			
 			swiat->GetOrganizmNaPolu(this->Y - 1, this->X)->SetStatus(false);
 
-			std::cout << GetNazwaKlasy(typeid(*this).name()) << " zabil " 
-				<< GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y - 1, this->X))).name()) << " na polu " << this->X << ' ' << this->Y << '\n';
+			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zabil "
+				+ GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y - 1, this->X))).name())
+				+ " na polu " + std::to_string(this->X) + ' ' + std::to_string(this->Y - 1);
+
+			/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " zabil " 
+				<< GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y - 1, this->X))).name()) 
+				<< " na polu " << this->X << ' ' << this->Y - 1 << '\n';*/
 		}
 	}
 	if (this->X < this->swiat->GetRozmiarX() - 1 ) {		// w prawo
-		if (!this->swiat->SprawdzCzyWolne(this->Y, this->X + 1) && this->swiat->GetOrganizmNaPolu(this->Y, this->X + 1)->GetInicjatywa() != 0){
+		if (!this->swiat->SprawdzCzyWolne(this->Y, this->X + 1) && 
+			this->swiat->GetOrganizmNaPolu(this->Y, this->X + 1)->GetInicjatywa() != 0){
 			
 			swiat->GetOrganizmNaPolu(this->Y, this->X + 1)->SetStatus(false);
+
+			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zabil "
+				+ GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y, this->X + 1))).name())
+				+ " na polu " + std::to_string(this->X + 1) + ' ' + std::to_string(this->Y);
 			
-			std::cout << GetNazwaKlasy(typeid(*this).name()) << " zabil "
-				<< GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y, this->X + 1))).name()) << " na polu " << this->X << ' ' << this->Y << '\n';
+			/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " zabil "
+				<< GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y, this->X + 1))).name()) 
+				<< " na polu " << this->X + 1 << ' ' << this->Y << '\n';*/
 		}
 	}
 	if (this->Y < this->swiat->GetRozmiarY() - 1) {		// w dol
 		if (!this->swiat->SprawdzCzyWolne(this->Y + 1, this->X) && this->swiat->GetOrganizmNaPolu(this->Y + 1, this->X)->GetInicjatywa() != 0) {
 			
 			swiat->GetOrganizmNaPolu(this->Y + 1, this->X)->SetStatus(false);
+
+			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zabil "
+				+ GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y + 1, this->X))).name())
+				+ " na polu " + std::to_string(this->X) + ' ' + std::to_string(this->Y + 1);
 			
-			std::cout << GetNazwaKlasy(typeid(*this).name()) << " zabil "
-				<< GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y + 1, this->X))).name()) << " na polu " << this->X << ' ' << this->Y << '\n';
+			/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " zabil "
+				<< GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y + 1, this->X))).name()) << " na polu " << this->X << ' ' << this->Y << '\n';*/
 		}
 	}
 	if (this->X > 0) {										// w lewo
 		if (!this->swiat->SprawdzCzyWolne(this->Y, this->X - 1) && this->swiat->GetOrganizmNaPolu(this->Y, this->X - 1)->GetInicjatywa() != 0) {
 			
 			swiat->GetOrganizmNaPolu(this->Y, this->X - 1)->SetStatus(false);
+
+			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zabil "
+				+ GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y, this->X - 1))).name())
+				+ " na polu " + std::to_string(this->X - 1) + ' ' + std::to_string(this->Y);
 			
-			std::cout << GetNazwaKlasy(typeid(*this).name()) << " zabil "
-				<< GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y, this->X - 1))).name()) << " na polu " << this->X << ' ' << this->Y << '\n';
+			/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " zabil "
+				<< GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y, this->X - 1))).name()) << " na polu " << this->X << ' ' << this->Y << '\n';*/
 		}
 	}
+
+	this->swiat->DodajKomentarz(komentarz);
 
 	this->swiat->OdswiezPole();
 
@@ -114,7 +138,13 @@ void BarszczSosnowskiego::Akcja() {
 
 		if (zasiane && this->rozmnozylSie == false) {
 			this->swiat->DodajRosline(this->GetNazwaKlasy(typeid(*this).name()), newY, newX);
-			std::cout << GetNazwaKlasy(typeid(*this).name()) << " zasial dziecko na polu " << newX << ' ' << newY << '\n';
+
+			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zasial dziecko na polu "
+				+ std::to_string(newX) + ' ' + std::to_string(newY);
+
+			//std::cout << GetNazwaKlasy(typeid(*this).name()) << " zasial dziecko na polu " << newX << ' ' << newY << '\n';
+
+			this->swiat->DodajKomentarz(komentarz);
 		}
 	}
 
@@ -127,6 +157,13 @@ void BarszczSosnowskiego::Kolizja(Organizm* atakujacy) {
 
 	std::string wchodzacy = GetNazwaKlasy(typeid(*atakujacy).name());
 
+	std::string komentarz = "";
+
+	komentarz = wchodzacy + " probowal zjesc i nie dal rady " + na_polu + " na polu " 
+		+ std::to_string(this->GetX()) + " " + std::to_string(this->GetY());
+
 	atakujacy->SetStatus(false);
-	std::cout << wchodzacy << " probowal zjesc i nie dal rady " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+	//std::cout << wchodzacy << " probowal zjesc i nie dal rady " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+
+	this->swiat->DodajKomentarz(komentarz);
 }

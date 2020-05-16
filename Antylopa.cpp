@@ -83,6 +83,8 @@ void Antylopa::Kolizja(Organizm* atakujacy) {
 
 	std::string wchodzacy = GetNazwaKlasy(typeid(*atakujacy).name());
 
+	std::string komentarz = "";
+
 	int uciekaj = rand() % 2;
 
 	if (na_polu == wchodzacy && this != atakujacy) {	 // rozmnazanie
@@ -96,11 +98,19 @@ void Antylopa::Kolizja(Organizm* atakujacy) {
 		if (na_polu != wchodzacy) {
 			if (this->GetSila() <= atakujacy->GetSila()) {
 				this->zywy = false;
-				std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+
+				komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + " na_polu "
+					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
+
+				//std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 			else if (this->GetSila() > atakujacy->GetSila()) {
 				atakujacy->SetStatus(false);
-				std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+
+				komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na_polu "
+					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
+
+				//std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 		}
 	}
@@ -156,15 +166,28 @@ void Antylopa::Kolizja(Organizm* atakujacy) {
 
 			if (this->GetSila() <= atakujacy->GetSila()) {
 				this->zywy = false;
-				std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+
+				komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + " na_polu "
+					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
+
+				//std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 			else if (this->GetSila() > atakujacy->GetSila()) {
 				atakujacy->SetStatus(false);
-				std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+
+				komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na_polu "
+					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
+
+				//std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 		}
 		else {
-			std::cout << wchodzacy << " nie dogonil " << na_polu << " na polu " << atakujacy->GetX() << ' ' << atakujacy->GetY() << '\n';
+			komentarz = wchodzacy + "  nie dogonil " + na_polu + " na_polu "
+				+ std::to_string(atakujacy->GetX()) + ' ' + std::to_string(atakujacy->GetY());
+
+			//std::cout << wchodzacy << " nie dogonil " << na_polu << " na polu " << atakujacy->GetX() << ' ' << atakujacy->GetY() << '\n';
 		}
 	}
+
+	this->swiat->DodajKomentarz(komentarz);
 }

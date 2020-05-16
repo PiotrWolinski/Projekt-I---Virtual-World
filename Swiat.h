@@ -20,6 +20,8 @@ class Swiat
 
 	std::vector<Organizm*> rosliny;
 
+	std::vector<std::string> komentarze;
+
 	void WykonajTure();
 
 	void Rysuj();
@@ -58,6 +60,10 @@ public:
 	void DodajRosline(std::string klasa, int const newY, int const newX);
 
 	void OdswiezPole();
+
+	void Skomentuj();
+
+	void DodajKomentarz(std::string komentarz);
 
 	Organizm* GetOrganizmNaPolu(int const Y, int const X);
 

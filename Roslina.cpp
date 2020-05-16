@@ -13,6 +13,8 @@ void Roslina::Akcja() {
 
 	if (rozmnoz_sie < SPAWN_RATE_R) {
 
+		std::string komentarz = "";
+
 		int newX = this->X;
 		int newY = this->Y;
 
@@ -61,13 +63,21 @@ void Roslina::Akcja() {
 		} while (!zasiane && dir != tmp);
 
 		if (zasiane && this->rozmnozylSie == false) {
+
+			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zasial dziecko na polu "
+				+ std::to_string(newX) + ' ' + std::to_string(newY);
+
 			this->swiat->DodajRosline(this->GetNazwaKlasy(typeid(*this).name()), newY, newX);
-			std::cout << GetNazwaKlasy(typeid(*this).name()) << " zasial dziecko na polu " << newX << ' ' << newY << '\n';
+			//std::cout << GetNazwaKlasy(typeid(*this).name()) << " zasial dziecko na polu " << newX << ' ' << newY << '\n';
 		}
+
+		this->swiat->DodajKomentarz(komentarz);
 	}
 }
 
 void Roslina::Kolizja(Organizm* atakujacy) {
+
+	std::string komentarz = "";
 
 	std::string na_polu = GetNazwaKlasy(typeid(*this).name());
 
@@ -75,10 +85,20 @@ void Roslina::Kolizja(Organizm* atakujacy) {
 
 	if (atakujacy->GetSila() >= this->GetSila()) {
 		this->zywy = false;
-		std::cout << wchodzacy << " zjadl " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+
+		komentarz = wchodzacy + " zjadl " + na_polu + " na polu " 
+			+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
+
+		//std::cout << wchodzacy << " zjadl " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 	}
 	else if (atakujacy->GetSila() < this->GetSila()) {
 		atakujacy->SetStatus(false);
-		std::cout << wchodzacy << " probowal zjesc i nie dal rady " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+
+		komentarz = wchodzacy + " zjadl " + na_polu + " na polu "
+			+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
+
+		//std::cout << wchodzacy << " probowal zjesc i nie dal rady " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 	}
+
+	this->swiat->DodajKomentarz(komentarz);
 }

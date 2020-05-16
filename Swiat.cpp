@@ -232,8 +232,6 @@ void Swiat::WykonajTure() {
 
 	system("cls");
 
-	Rysuj();
-
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		zwierzeta[i]->Akcja();
 
@@ -248,6 +246,11 @@ void Swiat::WykonajTure() {
 
 		OdswiezPole();
 	}
+
+	Rysuj();
+
+	Skomentuj();
+
 	KolejnaTura();
 }
 
@@ -260,6 +263,10 @@ void Swiat::Input() {
 			std::cout << "\ts - aktywuje specjalna umiejetnosc czlowieka\n\n";
 			std::cout << "\tq - wyjscie z symulacji\n\n";
 			std::cout << "Kazde polecenie powinno sie zaczynac od podania kierunku ruchu dla czlowieka przy uzyciu strzalek\n\n";
+			std::cout << "\tPoczatkowy stan planszy: \n\n";
+
+			Rysuj();
+
 			std::cout << "Nacisnij klawisz t i enter, zeby przejsc do symulacji\n";
 		}
 		std::cin >> i;
@@ -321,4 +328,20 @@ bool Swiat::SprawdzCzyWolne(int const Y, int const X) const {
 
 Organizm* Swiat::GetOrganizmNaPolu(int const Y, int const X) {
 	return this->pole[Y][X];
+}
+
+void Swiat::DodajKomentarz(std::string komentarz) {
+	this->komentarze.push_back(komentarz);
+}
+
+void Swiat::Skomentuj() {
+	for (int i = 0; i < komentarze.size(); ++i) {
+		if (komentarze[i] != "") {
+			std::cout << komentarze[i] << std::endl;
+		}
+	}
+
+	for (int i = 0; i < komentarze.size(); ++i) {
+		komentarze.erase(komentarze.begin() + i);
+	}
 }

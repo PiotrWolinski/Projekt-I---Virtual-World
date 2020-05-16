@@ -47,15 +47,25 @@ void Zwierze::Kolizja(Organizm* atakujacy) {
 
 	std::string wchodzacy = GetNazwaKlasy(typeid(*atakujacy).name()); 
 
+	std::string komentarz = "";
+
 	if (na_polu != wchodzacy) {
 		if (this->GetSila() <= atakujacy->GetSila()) {
 			this->zywy = false;
-			std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+			komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + ' ' + std::to_string(this->GetX()) 
+				+ ' ' + std::to_string(this->GetY());
+
+			//std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 		else if (this->GetSila() > atakujacy->GetSila()) {
 			atakujacy->SetStatus(false);
-			std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
+			komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na polu " + std::to_string(this->GetX())
+				+ ' ' + std::to_string(this->GetY());
+			
+			//std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
+
+		this->swiat->DodajKomentarz(komentarz);
 	}
 	else if (na_polu == wchodzacy && this != atakujacy) { // rozmnazanie
 
@@ -67,6 +77,9 @@ void Zwierze::Kolizja(Organizm* atakujacy) {
 }
 
 void Zwierze::RozmnozSie(Organizm* wchodzacy) {
+
+	std::string komentarz = "";
+
 	if (this->rozmnozylSie == false && wchodzacy->GetRozmnozylSie() == false && this->GetWiek() > 5 && wchodzacy->GetWiek() > 5) {
 
 		bool rozmnozony = false;
@@ -94,16 +107,29 @@ void Zwierze::RozmnozSie(Organizm* wchodzacy) {
 		if (rozmnozony) {
 			this->swiat->DodajZwierze(this->GetNazwaKlasy(typeid(*this).name()), newY, newX);
 			//std::cout << this->GetNazwaKlasy(typeid(*this).name());
-			std::cout << GetNazwaKlasy(typeid(*wchodzacy).name()) << " ma potomka na polu " << newX << ' ' << newY << '\n';
+			komentarz = GetNazwaKlasy(typeid(*wchodzacy).name()) + " ma potomka na polu "
+				+ std::to_string(newX) + ' ' + std::to_string(newY);
+
+			//std::cout << GetNazwaKlasy(typeid(*wchodzacy).name()) << " ma potomka na polu " << newX << ' ' << newY << '\n';
 		}
 		else {
-			std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << " " << this->GetY() << '\n';
+
+			komentarz = GetNazwaKlasy(typeid(*wchodzacy).name()) + " nie moze sie rozmnozyc na polu "
+				+ std::to_string(newX) + ' ' + std::to_string(newY);
+
+			//std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << " " << this->GetY() << '\n';
 		}
 
 		this->SetRozmnozylSie(true);
 		wchodzacy->SetRozmnozylSie(true);
 	} 
 	else {
-		std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << " " << this->GetY() << '\n';
+
+		komentarz = GetNazwaKlasy(typeid(*wchodzacy).name()) + " nie moze sie rozmnozyc na polu "
+			+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
+
+		//std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << " " << this->GetY() << '\n';
 	}
+
+	this->swiat->DodajKomentarz(komentarz);
 }
