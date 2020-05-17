@@ -80,7 +80,6 @@ void Mlecz::Akcja() {
 					+ std::to_string(newX) + ' ' + std::to_string(newY);
 
 				this->swiat->DodajRosline(this->GetNazwaKlasy(typeid(*this).name()), newY, newX);
-				//std::cout << GetNazwaKlasy(typeid(*this).name()) << " zasial dziecko na polu " << newX << ' ' << newY << '\n';
 			}
 
 			this->swiat->DodajKomentarz(komentarz);

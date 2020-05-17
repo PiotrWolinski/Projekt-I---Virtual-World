@@ -55,8 +55,6 @@ void Zolw::Akcja() {
 			this->swiat->GetOrganizmNaPolu(this->Y, this->X)->Kolizja(this);
 		}
 	}
-
-	/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " poruszyl sie na pole: (" << this->GetX() << ", " << this->GetY() << ")\n";*/
 }
 
 void Zolw::Kolizja(Organizm* atakujacy) {
@@ -75,8 +73,6 @@ void Zolw::Kolizja(Organizm* atakujacy) {
 
 			komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na polu "
 				+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-			//std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 		else if (atakujacy->GetSila() < 5) {
 			atakujacy->SetX(atakujacy->GetLastX());
@@ -84,16 +80,12 @@ void Zolw::Kolizja(Organizm* atakujacy) {
 
 			komentarz = wchodzacy + " zostal odgoniony przez " + na_polu + " na polu "
 				+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-			//std::cout << wchodzacy << " zostal odgoniony przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 		else if (atakujacy->GetSila() >= 5) {
 			this->zywy = false;
 
 			komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + " na polu "
 				+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-			//std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 
 		this->swiat->DodajKomentarz(komentarz);

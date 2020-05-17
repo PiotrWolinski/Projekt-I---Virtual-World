@@ -1,5 +1,6 @@
 #include "Swiat.h"
 #include "Organizmy.h"
+#include "Czlowiek.h"
 
 #include <iostream>
 #include <iomanip>
@@ -8,15 +9,21 @@
 #include <utility>
 #include <algorithm>
 #include <string>
-#include <conio.h>
+#include <fstream>
 
-
-Swiat::Swiat(const int rozmiarX, const int rozmiarY): rozmiarX(rozmiarX), rozmiarY(rozmiarY)
+Swiat::Swiat(int const rozmiarX, int const rozmiarY): rozmiarX(rozmiarX), rozmiarY(rozmiarY)
 {
 	this->pole = new Organizm**[this->rozmiarY];
 	for (int i = 0; i < this->rozmiarY; ++i) {
 		this->pole[i] = new Organizm * [this->rozmiarX]{};
 	}
+
+	this->czlowiek = new Czlowiek(rand() % this->rozmiarY, rand() % this->rozmiarX);
+	this->czlowiek->SetSwiat(this);
+
+	this->pole[this->czlowiek->GetY()][this->czlowiek->GetX()] = this->czlowiek;
+
+	zwierzeta.push_back(this->czlowiek);
 
 	DodajOrganizmy();
 
@@ -53,6 +60,8 @@ void Swiat::Rysuj() {
 void Swiat::DodajOrganizmy() {
 	for (int i = 0; i < this->rozmiarY; ++i) {
 		for (int j = 0; j < this->rozmiarX; ++j) {
+			if (this->pole[i][j] != NULL) continue;
+
 			int rand1 = rand() % 100;
 			if (rand1 < SPAWN_RATE_Z) {
 				int rand2 = rand() % SUMA_ORGANIZMOW;
@@ -98,7 +107,6 @@ void Swiat::DodajOrganizmy() {
 					rosliny.push_back(this->pole[i][j]);
 					break;
 				}
-				//std::cout << this->pole[i][j]->GetX() << " " << this->pole[i][j]->GetY() << '\n';
 			}
 		}
 	}
@@ -125,13 +133,12 @@ void Swiat::OdswiezPole() {
 	}
 }
 
-//tutaj jest zle sortowanie
 void Swiat::SortujRosliny() {
 	if (rosliny.size() > 0) {
-		for (int i = 0; i < rosliny.size(); ++i) {
-			for (int j = 0; j < rosliny.size(); ++j) {
-				if (rosliny[i]->GetWiek() < rosliny[j]->GetWiek()) {
-					std::swap(rosliny[i], rosliny[j]);
+		for (int i = 0; i < rosliny.size() - 1; ++i) {
+			for (int j = 0; j < rosliny.size() - i - 1; ++j) {
+				if (rosliny[j]->GetWiek() < rosliny[j + 1]->GetWiek()) {
+					std::swap(rosliny[j], rosliny[j + 1]);
 				}
 			}
 		}
@@ -214,12 +221,14 @@ void Swiat::DodajRosline(std::string klasa, int const newY, int const newX) {
 void Swiat::UsunMartwe() {
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		if (zwierzeta[i]->GetStatus() == false) {
+			delete zwierzeta[i];
 			zwierzeta.erase(zwierzeta.begin() + i);
 		}
 	}
 
 	for (int i = 0; i < rosliny.size(); ++i) {
 		if (rosliny[i]->GetStatus() == false) {
+			delete rosliny[i];
 			rosliny.erase(rosliny.begin() + i);
 		}
 	}
@@ -227,8 +236,8 @@ void Swiat::UsunMartwe() {
 
 void Swiat::WykonajTure() {
 
-	SortujRosliny();
 	SortujZwierzeta();
+	SortujRosliny();
 
 	system("cls");
 
@@ -259,21 +268,41 @@ void Swiat::Input() {
 	do {
 		if (this->tura == 0) {
 			std::cout << "Witam w projekcie pierwszym z Programowania Obiektowego. Ponizej krotki opis funkcjonalnosci:\n\n";
-			std::cout << "\tt - przechodzi do nastepnej tury\n\n";
-			std::cout << "\ts - aktywuje specjalna umiejetnosc czlowieka\n\n";
-			std::cout << "\tq - wyjscie z symulacji\n\n";
-			std::cout << "Kazde polecenie powinno sie zaczynac od podania kierunku ruchu dla czlowieka przy uzyciu strzalek\n\n";
+			std::cout << "\tt - przechodzi do nastepnej tury.\n\n";
+			std::cout << "\tx - aktywuje specjalna umiejetnosc czlowieka.\n\n";
+			std::cout << "\tq - wyjscie z symulacji.\n\n";
+			std::cout << "\tp - wcisniecie p, a nastepnie podanie jednego z klawiszy wasd przypisze Czlowiekowi kierunek ruchu na najblizsza ture.\n\n";
+			std::cout << "\tz - zapis aktualnego stanu symulacji do pliku.\n\n";
+			std::cout << "\tc - wczytanie ostatniego zapisu symulacji i nadpisanie aktualnego stanu symulacji.\n\n";
 			std::cout << "\tPoczatkowy stan planszy: \n\n";
 
 			Rysuj();
 
 			std::cout << "Nacisnij klawisz t i enter, zeby przejsc do symulacji\n";
 		}
-		std::cin >> i;
+
+		i = ' ';
+		while (i != 't') {
+
+			std::cin >> i;
+
+			if (i == 'p' && this->czlowiek->GetStatus() == true) {
+				char tmp = ' ';
+				std::cin >> tmp;
+
+				dynamic_cast<Czlowiek*>(this->czlowiek)->SetInput(tmp);
+			}
+			else if (i == 'x') {
+				dynamic_cast<Czlowiek*>(this->czlowiek)->Aktywuj();
+			}
+			else if (i == 'z') {
+				Zapisz();
+			}
+			else if (i == 'q') break;
+		}
 
 		WykonajTure();
-	
-	} while (i == 't');
+	} while (i != 'q');
 }
 
 int Swiat::SprawdzSilePola(int const Y, int const X) const {
@@ -326,7 +355,7 @@ bool Swiat::SprawdzCzyWolne(int const Y, int const X) const {
 	}
 }
 
-Organizm* Swiat::GetOrganizmNaPolu(int const Y, int const X) {
+Organizm* Swiat::GetOrganizmNaPolu(int const Y, int const X) const {
 	return this->pole[Y][X];
 }
 
@@ -341,7 +370,45 @@ void Swiat::Skomentuj() {
 		}
 	}
 
-	for (int i = 0; i < komentarze.size(); ++i) {
-		komentarze.erase(komentarze.begin() + i);
+	komentarze.clear();
+	komentarze.shrink_to_fit();
+}
+
+void Swiat::Zapisz() {
+	std::ofstream out;
+	out.open("zapis.txt");
+
+	out << rozmiarY << " " << rozmiarX << tura << std::endl;
+
+	out.close();
+}
+
+void Swiat::Wczytaj() {
+
+
+
+
+
+}
+
+Swiat::~Swiat() {
+	for (int i = 0; i < zwierzeta.size(); ++i) {
+		delete zwierzeta[i];
 	}
+	zwierzeta.clear();
+	zwierzeta.shrink_to_fit();
+
+	for (int i = 0; i < rosliny.size(); ++i) {
+		delete rosliny[i];
+	}
+	rosliny.clear();
+	rosliny.shrink_to_fit();
+
+	komentarze.clear();
+	komentarze.shrink_to_fit();
+
+	for (int i = 0; i < rozmiarY; ++i) {
+		delete[] pole[i];
+	}
+	delete[] pole;
 }

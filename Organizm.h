@@ -6,7 +6,6 @@ class Swiat;
 class Organizm
 {
 protected:
-	int id;
 	int sila;
 	int inicjatywa;
 	int wiek;

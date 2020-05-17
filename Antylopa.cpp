@@ -101,16 +101,12 @@ void Antylopa::Kolizja(Organizm* atakujacy) {
 
 				komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + " na_polu "
 					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-				//std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 			else if (this->GetSila() > atakujacy->GetSila()) {
 				atakujacy->SetStatus(false);
 
 				komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na_polu "
 					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-				//std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 		}
 	}
@@ -169,23 +165,17 @@ void Antylopa::Kolizja(Organizm* atakujacy) {
 
 				komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + " na_polu "
 					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-				//std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 			else if (this->GetSila() > atakujacy->GetSila()) {
 				atakujacy->SetStatus(false);
 
 				komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na_polu "
 					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-				//std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 			}
 		}
 		else {
 			komentarz = wchodzacy + "  nie dogonil " + na_polu + " na_polu "
 				+ std::to_string(atakujacy->GetX()) + ' ' + std::to_string(atakujacy->GetY());
-
-			//std::cout << wchodzacy << " nie dogonil " << na_polu << " na polu " << atakujacy->GetX() << ' ' << atakujacy->GetY() << '\n';
 		}
 	}
 

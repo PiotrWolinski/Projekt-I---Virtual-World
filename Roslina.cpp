@@ -24,7 +24,7 @@ void Roslina::Akcja() {
 
 		do {
 			if (dir == 0) {
-				if (this->Y > 0 && this->swiat->SprawdzCzyWolne(this->Y - 1, this->X)) {										// sprawdzam gore
+				if (this->Y > 0 && this->swiat->SprawdzCzyWolne(this->Y - 1, this->X)) {									// sprawdzam gore
 					newY--;
 					zasiane = true;
 				}
@@ -68,7 +68,6 @@ void Roslina::Akcja() {
 				+ std::to_string(newX) + ' ' + std::to_string(newY);
 
 			this->swiat->DodajRosline(this->GetNazwaKlasy(typeid(*this).name()), newY, newX);
-			//std::cout << GetNazwaKlasy(typeid(*this).name()) << " zasial dziecko na polu " << newX << ' ' << newY << '\n';
 		}
 
 		this->swiat->DodajKomentarz(komentarz);
@@ -88,16 +87,12 @@ void Roslina::Kolizja(Organizm* atakujacy) {
 
 		komentarz = wchodzacy + " zjadl " + na_polu + " na polu " 
 			+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-		//std::cout << wchodzacy << " zjadl " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 	}
 	else if (atakujacy->GetSila() < this->GetSila()) {
 		atakujacy->SetStatus(false);
 
-		komentarz = wchodzacy + " zjadl " + na_polu + " na polu "
+		komentarz = wchodzacy + " zostal zabity przez " + na_polu + " na polu "
 			+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
-
-		//std::cout << wchodzacy << " probowal zjesc i nie dal rady " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 	}
 
 	this->swiat->DodajKomentarz(komentarz);

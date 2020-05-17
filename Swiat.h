@@ -2,25 +2,24 @@
 #include "Organizm.h"
 #include "Wspolrzedne.h"
 
-
 #include <string>
 #include <vector>
 
 class Swiat
 {
-	// rozmiar pola
 	int rozmiarX, rozmiarY;
+
 	int tura;
 
-	// pole symulacji - dwu wymiarowa tablica wskaznikow
 	Organizm*** pole;
-	std::vector<Organizm*> doZabicia;
 
 	std::vector<Organizm*> zwierzeta;
 
 	std::vector<Organizm*> rosliny;
 
 	std::vector<std::string> komentarze;
+
+	Organizm* czlowiek;
 
 	void WykonajTure();
 
@@ -36,8 +35,14 @@ class Swiat
 
 	void KolejnaTura();
 
+	void Skomentuj();
+
+	void Zapisz();
+
+	void Wczytaj();
+
 public:
-	Swiat(const int rozmiarX, const int rozmiarY);
+	Swiat(int const rozmiarX, int const rozmiarY);
 
 	void SetRozmiarY(int const y);
 
@@ -61,11 +66,10 @@ public:
 
 	void OdswiezPole();
 
-	void Skomentuj();
-
 	void DodajKomentarz(std::string komentarz);
 
-	Organizm* GetOrganizmNaPolu(int const Y, int const X);
+	Organizm* GetOrganizmNaPolu(int const Y, int const X) const;
 
+	~Swiat();
 };
 

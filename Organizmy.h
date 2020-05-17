@@ -9,6 +9,7 @@
 #include "Guarana.h"
 #include "WilczeJagody.h"
 #include "BarszczSosnowskiego.h"
+#include "Czlowiek.h"
 
 #define SPAWN_RATE_Z 20
 

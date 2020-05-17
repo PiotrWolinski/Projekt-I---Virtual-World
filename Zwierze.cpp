@@ -34,8 +34,6 @@ void Zwierze::Akcja() {
 		}
 	}
 
-	/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " poruszyl sie na pole: (" << this->GetX() << ", " << this->GetY() << ")\n";*/
-
 	if (!this->swiat->SprawdzCzyWolne(this->Y, this->X)) {
 		this->swiat->GetOrganizmNaPolu(this->Y, this->X)->Kolizja(this);
 	}
@@ -54,15 +52,11 @@ void Zwierze::Kolizja(Organizm* atakujacy) {
 			this->zywy = false;
 			komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + ' ' + std::to_string(this->GetX()) 
 				+ ' ' + std::to_string(this->GetY());
-
-			//std::cout << wchodzacy << " zaatakowal i zabil " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 		else if (this->GetSila() > atakujacy->GetSila()) {
 			atakujacy->SetStatus(false);
 			komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na polu " + std::to_string(this->GetX())
 				+ ' ' + std::to_string(this->GetY());
-			
-			//std::cout << wchodzacy << " zaatakowal i zostal zabity przez " << na_polu << " na polu " << this->GetX() << ' ' << this->GetY() << '\n';
 		}
 
 		this->swiat->DodajKomentarz(komentarz);
@@ -106,18 +100,15 @@ void Zwierze::RozmnozSie(Organizm* wchodzacy) {
 
 		if (rozmnozony) {
 			this->swiat->DodajZwierze(this->GetNazwaKlasy(typeid(*this).name()), newY, newX);
-			//std::cout << this->GetNazwaKlasy(typeid(*this).name());
+
 			komentarz = GetNazwaKlasy(typeid(*wchodzacy).name()) + " ma potomka na polu "
 				+ std::to_string(newX) + ' ' + std::to_string(newY);
-
-			//std::cout << GetNazwaKlasy(typeid(*wchodzacy).name()) << " ma potomka na polu " << newX << ' ' << newY << '\n';
 		}
 		else {
 
 			komentarz = GetNazwaKlasy(typeid(*wchodzacy).name()) + " nie moze sie rozmnozyc na polu "
 				+ std::to_string(newX) + ' ' + std::to_string(newY);
 
-			//std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << " " << this->GetY() << '\n';
 		}
 
 		this->SetRozmnozylSie(true);
@@ -128,7 +119,6 @@ void Zwierze::RozmnozSie(Organizm* wchodzacy) {
 		komentarz = GetNazwaKlasy(typeid(*wchodzacy).name()) + " nie moze sie rozmnozyc na polu "
 			+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
 
-		//std::cout << this->GetNazwaKlasy(typeid(*this).name()) << " nie moze sie rozmnozyc na polu " << this->GetX() << " " << this->GetY() << '\n';
 	}
 
 	this->swiat->DodajKomentarz(komentarz);

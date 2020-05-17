@@ -69,7 +69,6 @@ void Lis::Akcja() {
 			}
 		}
 	}
-	/*std::cout << GetNazwaKlasy(typeid(*this).name()) << " poruszyl sie na pole: (" << this->GetX() << ", " << this->GetY() << ")\n";*/
 
 	if (!this->swiat->SprawdzCzyWolne(this->Y, this->X)) {
 		this->swiat->GetOrganizmNaPolu(this->Y, this->X)->Kolizja(this);
