@@ -3,6 +3,7 @@
 #include <iostream>
 
 WilczeJagody::WilczeJagody(int Y, int X) {
+	this->symbol = 'J';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 99;
@@ -13,5 +14,5 @@ WilczeJagody::WilczeJagody(int Y, int X) {
 }
 
 void WilczeJagody::Rysowanie() {
-	std::cout << std::setw(2) << 'J' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }

@@ -3,10 +3,11 @@
 #include <iomanip>
 
 void Wilk::Rysowanie() {
-	std::cout << std::setw(2) << 'W' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 Wilk::Wilk(int Y, int X) {
+	this->symbol = 'W';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 9;

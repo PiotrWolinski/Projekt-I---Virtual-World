@@ -378,20 +378,141 @@ void Swiat::Zapisz() {
 	std::ofstream out;
 	out.open("zapis.txt");
 
-	out << rozmiarY << " " << rozmiarX << tura << std::endl;
+	out << rozmiarY << " " << rozmiarX << " " << tura << std::endl;
+	out << zwierzeta.size() << std::endl;
+	for (int i = 0; i < zwierzeta.size(); ++i) {
+		out << zwierzeta[i]->GetSymbol() << " " << zwierzeta[i]->GetX() << " " << zwierzeta[i]->GetY() << " " 
+			<< zwierzeta[i]->GetSila() << " " << zwierzeta[i]->GetWiek() << " " << zwierzeta[i]->GetLastX() << " " << zwierzeta[i]->GetLastY() << " "
+			<< zwierzeta[i]->GetStatus() << " " << zwierzeta[i]->GetRozmnozylSie() << std::endl;
+	}
+
+	out << rosliny.size() << std::endl;
+	for (int i = 0; i < rosliny.size(); ++i) {
+		out << rosliny[i]->GetSymbol() << " " << rosliny[i]->GetX() << " " << rosliny[i]->GetY() << " "
+			<< rosliny[i]->GetSila() << " " << rosliny[i]->GetWiek() << " " << rosliny[i]->GetLastX() << " " << rosliny[i]->GetLastY() << " "
+			<< rosliny[i]->GetStatus() << " " << rosliny[i]->GetRozmnozylSie() << std::endl;
+	}
+
+	out << dynamic_cast<Czlowiek*>(this->czlowiek)->GetUmiejetnosc() << std::endl << dynamic_cast<Czlowiek*>(this->czlowiek)->GetIleAktywna() << " "
+		<< dynamic_cast<Czlowiek*>(this->czlowiek)->GetKiedyReset() << std::endl << dynamic_cast<Czlowiek*>(this->czlowiek)->GetLastInput() << " "
+		<< dynamic_cast<Czlowiek*>(this->czlowiek)->GetInput() << std::endl;
 
 	out.close();
 }
 
 void Swiat::Wczytaj() {
 
+	WyczyscDane();
 
+	std::ifstream in;
+	in.open("zapis.txt");
 
+	in >> this->rozmiarX >> this->rozmiarY >> this->tura;
+	int zwierzeta_size = 0;
+	in >> zwierzeta_size;
+
+	for (int i = 0; i < zwierzeta_size; ++i) {
+		char gatunek;
+		int tmpX = 0;
+		int tmpY = 0;
+		in >> gatunek >> tmpX >> tmpY; 
+		switch (gatunek) {
+		case 'W':
+			zwierzeta.push_back(new Wilk(tmpY, tmpX));
+			break;
+		case 'O':
+			zwierzeta.push_back(new Owca(tmpY, tmpX));
+			break;
+		case 'L':
+			zwierzeta.push_back(new Lis(tmpY, tmpX));
+			break;
+		case 'Z':
+			zwierzeta.push_back(new Zolw(tmpY, tmpX));
+			break;
+		case 'A':
+			zwierzeta.push_back(new Antylopa(tmpY, tmpX));
+			break;
+		case 'C':
+			zwierzeta.push_back(new Czlowiek(tmpY, tmpX));
+			this->czlowiek = zwierzeta[i];
+			break;
+		}
+		int sila = 0;
+		int wiek = 0;
+		int lastX = 0;
+		int lastY = 0;
+		bool zywy = true;
+		bool rozmnozylSie = false;
+		in >> sila >> wiek >> lastX >> lastY >> zywy >> rozmnozylSie;
+		zwierzeta[i]->SetSila(sila);
+		zwierzeta[i]->SetWiek(wiek);
+		zwierzeta[i]->SetLastX(lastX);
+		zwierzeta[i]->SetLastY(lastY);
+		zwierzeta[i]->SetStatus(zywy);
+		zwierzeta[i]->SetRozmnozylSie(rozmnozylSie);
+		zwierzeta[i]->SetSwiat(this);
+	}
+
+	int rosliny_size = 0;
+	in >> rosliny_size;
+
+	for (int i = 0; i < rosliny_size; ++i) {
+		char gatunek;
+		int tmpX = 0;
+		int tmpY = 0;
+		in >> gatunek >> tmpX >> tmpY;
+		switch (gatunek) {
+		case 'T':
+			rosliny.push_back(new Trawa(tmpY, tmpX));
+			break;
+		case 'M':
+			rosliny.push_back(new Mlecz(tmpY, tmpX));
+			break;
+		case 'G':
+			rosliny.push_back(new Guarana(tmpY, tmpX));
+			break;
+		case 'J':
+			rosliny.push_back(new WilczeJagody(tmpY, tmpX));
+			break;
+		case 'B':
+			rosliny.push_back(new BarszczSosnowskiego(tmpY, tmpX));
+			break;
+		}
+		int sila = 0;
+		int wiek = 0;
+		int lastX = 0;
+		int lastY = 0;
+		bool zywy = true;
+		bool rozmnozylSie = false;
+		in >> sila >> wiek >> lastX >> lastY >> zywy >> rozmnozylSie;
+		rosliny[i]->SetSila(sila);
+		rosliny[i]->SetWiek(wiek);
+		rosliny[i]->SetLastX(lastX);
+		rosliny[i]->SetLastY(lastY);
+		rosliny[i]->SetStatus(zywy);
+		rosliny[i]->SetRozmnozylSie(rozmnozylSie);
+		rosliny[i]->SetSwiat(this);
+	}
+	bool umiejetnosc = false;
+	int ileAktywna = 0;
+	int kiedyReset = 0;
+	char lastInput = ' ';
+	char input = ' ';
+	in >> umiejetnosc >> ileAktywna >> kiedyReset >> lastInput >> input;
+	dynamic_cast<Czlowiek*>(this->czlowiek)->SetUmiejetnosc(umiejetnosc);
+	dynamic_cast<Czlowiek*>(this->czlowiek)->SetIleAktywna(ileAktywna);
+	dynamic_cast<Czlowiek*>(this->czlowiek)->SetKiedyReset(kiedyReset);
+	dynamic_cast<Czlowiek*>(this->czlowiek)->SetLastInput(lastInput);
+	dynamic_cast<Czlowiek*>(this->czlowiek)->SetInput(input);
 
 
 }
 
 Swiat::~Swiat() {
+	WyczyscDane();
+}
+
+void Swiat::WyczyscDane() {
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		delete zwierzeta[i];
 	}

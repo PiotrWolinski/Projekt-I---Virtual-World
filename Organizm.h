@@ -6,6 +6,7 @@ class Swiat;
 class Organizm
 {
 protected:
+	char symbol;
 	int sila;
 	int inicjatywa;
 	int wiek;
@@ -23,6 +24,8 @@ public:
 	virtual void Kolizja(Organizm* org) = 0;
 
 	virtual void Rysowanie() = 0;
+
+	char GetSymbol() const;
 
 	void SetSwiat(Swiat* swiat);
 

@@ -3,6 +3,7 @@
 #include <iomanip>
 
 Owca::Owca(int Y, int X) {
+	this->symbol = 'O';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 4;
@@ -16,5 +17,5 @@ Owca::Owca(int Y, int X) {
 }
 
 void Owca::Rysowanie() {
-	std::cout << std::setw(2) << 'O' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }

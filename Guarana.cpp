@@ -5,6 +5,7 @@
 #include <iostream>
 
 Guarana::Guarana(int Y, int X) {
+	this->symbol = 'G';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 0;
@@ -15,7 +16,7 @@ Guarana::Guarana(int Y, int X) {
 }
 
 void Guarana::Rysowanie() {
-	std::cout << std::setw(2) << 'G' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Guarana::Kolizja(Organizm* atakujacy) {

@@ -6,6 +6,7 @@
 #include <iostream>
 
 Mlecz::Mlecz(int Y, int X) {
+	this->symbol = 'M';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 0;
@@ -16,7 +17,7 @@ Mlecz::Mlecz(int Y, int X) {
 }
 
 void Mlecz::Rysowanie() {
-	std::cout << std::setw(2) << 'M' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Mlecz::Akcja() {

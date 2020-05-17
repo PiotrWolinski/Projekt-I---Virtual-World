@@ -5,6 +5,7 @@
 #include <iomanip>
 
 Zolw::Zolw(int Y, int X) {
+	this->symbol = 'Z';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 2;
@@ -18,7 +19,7 @@ Zolw::Zolw(int Y, int X) {
 }
 
 void Zolw::Rysowanie() {
-	std::cout << std::setw(2) << 'Z' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Zolw::Akcja() {

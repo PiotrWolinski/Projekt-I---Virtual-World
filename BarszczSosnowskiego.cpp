@@ -7,6 +7,7 @@
 #include <iostream>
 
 BarszczSosnowskiego::BarszczSosnowskiego(int Y, int X) {
+	this->symbol = 'B';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 10;
@@ -17,7 +18,7 @@ BarszczSosnowskiego::BarszczSosnowskiego(int Y, int X) {
 }
 
 void BarszczSosnowskiego::Rysowanie() {
-	std::cout << std::setw(2) << 'B' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void BarszczSosnowskiego::Akcja() {

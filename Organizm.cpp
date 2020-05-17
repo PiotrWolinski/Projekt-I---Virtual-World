@@ -4,6 +4,10 @@
 #include <string>
 #include <sstream>
 
+char Organizm::GetSymbol() const {
+	return this->symbol;
+}
+
 void Organizm::SetSwiat(Swiat *swiat) {
 	this->swiat = swiat;
 }

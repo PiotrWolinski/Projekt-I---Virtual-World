@@ -5,6 +5,7 @@
 #include <iomanip>
 
 Lis::Lis(int Y, int X) {
+	this->symbol = 'L';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 3;
@@ -18,7 +19,7 @@ Lis::Lis(int Y, int X) {
 }
 
 void Lis::Rysowanie() {
-	std::cout << std::setw(2) << 'L' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Lis::Akcja() {

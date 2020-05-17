@@ -41,6 +41,8 @@ class Swiat
 
 	void Wczytaj();
 
+	void WyczyscDane();
+
 public:
 	Swiat(int const rozmiarX, int const rozmiarY);
 

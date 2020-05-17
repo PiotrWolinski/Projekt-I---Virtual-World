@@ -27,5 +27,21 @@ public:
 	void SetInput(char input);
 
 	char GetInput() const;
+
+	void SetUmiejetnosc(bool umiejetnosc);
+
+	bool GetUmiejetnosc() const;
+
+	void SetLastInput(char lastInput);
+
+	char GetLastInput() const;
+
+	void SetIleAktywna(int ileAktywna);
+
+	int GetIleAktywna() const;
+
+	void SetKiedyReset(int kiedyReset);
+
+	int GetKiedyReset() const;
 };
 

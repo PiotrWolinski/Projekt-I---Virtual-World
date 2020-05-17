@@ -6,6 +6,7 @@
 #include <string>
 
 Czlowiek::Czlowiek(int Y, int X) {
+	this->symbol = 'C';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 5;
@@ -20,6 +21,10 @@ Czlowiek::Czlowiek(int Y, int X) {
 	this->kiedyReset = 0;
 	this->lastInput = ' ';
 	this->input = ' ';
+}
+
+void Czlowiek::Rysowanie() {
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Czlowiek::Akcja(char input) {
@@ -40,10 +45,6 @@ void Czlowiek::Akcja(char input) {
 void Czlowiek::Akcja() {
 	Akcja(this->GetInput());
 	this->SetInput(' ');
-}
-
-void Czlowiek::Rysowanie() {
-	std::cout << std::setw(2) << 'C' << ' ';
 }
 
 void Czlowiek::Umiejetnosc() {
@@ -81,6 +82,38 @@ void Czlowiek::SetInput(char input) {
 
 char Czlowiek::GetInput() const {
 	return this->input;
+}
+
+void Czlowiek::SetUmiejetnosc(bool umiejetnosc) {
+	this->umiejetnosc = umiejetnosc;
+}
+
+bool Czlowiek::GetUmiejetnosc() const {
+	return this->umiejetnosc;
+}
+
+void Czlowiek::SetLastInput(char lastInput) {
+	this->lastInput = lastInput;
+}
+
+char Czlowiek::GetLastInput() const {
+	return this->lastInput;
+}
+
+void Czlowiek::SetIleAktywna(int ileAktywna) {
+	this->ileAktywna = ileAktywna;
+}
+
+int Czlowiek::GetIleAktywna() const {
+	return this->ileAktywna;
+}
+
+void Czlowiek::SetKiedyReset(int kiedyReset) {
+	this->kiedyReset = kiedyReset;
+}
+
+int Czlowiek::GetKiedyReset() const {
+	return this->kiedyReset;
 }
 
 void Czlowiek::Aktywuj() {

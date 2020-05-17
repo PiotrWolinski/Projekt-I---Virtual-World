@@ -5,6 +5,7 @@
 #include <iomanip>
 
 Antylopa::Antylopa(int Y, int X) {
+	this->symbol = 'A';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 4;
@@ -18,7 +19,7 @@ Antylopa::Antylopa(int Y, int X) {
 }
 
 void Antylopa::Rysowanie() {
-	std::cout << std::setw(2) << 'A' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Antylopa::Akcja() {

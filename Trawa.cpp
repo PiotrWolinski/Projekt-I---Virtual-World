@@ -3,6 +3,7 @@
 #include <iostream>
 
 Trawa::Trawa(int Y, int X) {
+	this->symbol = 'T';
 	this->Y = Y;
 	this->X = X;
 	this->sila = 0;
@@ -13,5 +14,5 @@ Trawa::Trawa(int Y, int X) {
 }
 
 void Trawa::Rysowanie() {
-	std::cout << std::setw(2) << 'T' << ' ';
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
