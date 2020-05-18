@@ -5,7 +5,5 @@ class Owca :
 {
 public:
 	Owca(int Y, int X);
-
-	void Rysowanie();
 };
 

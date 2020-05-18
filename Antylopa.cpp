@@ -11,15 +11,11 @@ Antylopa::Antylopa(int Y, int X) {
 	this->sila = 4;
 	this->inicjatywa = 4;
 	this->wiek = 1;
-	this->zywy = true;
+	this->stan = true;
 	this->rozmnozylSie = false;
 
 	SetLastX(this->X);
 	SetLastY(this->Y);
-}
-
-void Antylopa::Rysowanie() {
-	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Antylopa::Akcja() {
@@ -98,13 +94,13 @@ void Antylopa::Kolizja(Organizm* atakujacy) {
 	else if (!uciekaj && this != atakujacy) {
 		if (na_polu != wchodzacy) {
 			if (this->GetSila() <= atakujacy->GetSila()) {
-				this->zywy = false;
+				this->stan = MARTWY;
 
 				komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + " na_polu "
 					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
 			}
 			else if (this->GetSila() > atakujacy->GetSila()) {
-				atakujacy->SetStatus(false);
+				atakujacy->SetStan(MARTWY);
 
 				komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na_polu "
 					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
@@ -162,13 +158,13 @@ void Antylopa::Kolizja(Organizm* atakujacy) {
 		if (moved == false) {
 
 			if (this->GetSila() <= atakujacy->GetSila()) {
-				this->zywy = false;
+				this->stan = MARTWY;
 
 				komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + " na_polu "
 					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
 			}
 			else if (this->GetSila() > atakujacy->GetSila()) {
-				atakujacy->SetStatus(false);
+				atakujacy->SetStan(MARTWY);
 
 				komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na_polu "
 					+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());

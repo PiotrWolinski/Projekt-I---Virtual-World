@@ -6,10 +6,8 @@ class BarszczSosnowskiego :
 public:
 	BarszczSosnowskiego(int Y, int X);
 
-	void Akcja();
+	void Akcja() override;
 
-	void Rysowanie();
-
-	void Kolizja(Organizm* org);
+	void Kolizja(Organizm* org) override;
 };
 

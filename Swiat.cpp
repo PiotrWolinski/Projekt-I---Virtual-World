@@ -10,8 +10,9 @@
 #include <algorithm>
 #include <string>
 #include <fstream>
+#include <conio.h>
 
-Swiat::Swiat(int const rozmiarX, int const rozmiarY): rozmiarX(rozmiarX), rozmiarY(rozmiarY)
+Swiat::Swiat(int const rozmiarY, int const rozmiarX): rozmiarY(rozmiarY), rozmiarX(rozmiarX)
 {
 	InitPole();
 
@@ -38,8 +39,12 @@ Swiat::Swiat(int const rozmiarX, int const rozmiarY): rozmiarX(rozmiarX), rozmia
 	SortujRosliny();
 }
 
+void Swiat::InitSwiat() {
+
+}
+
 void Swiat::InitPole() {
-	this->pole = new Organizm * *[this->rozmiarY];
+	this->pole = new Organizm * *[this->rozmiarY]{};
 	for (int i = 0; i < this->rozmiarY; ++i) {
 		this->pole[i] = new Organizm * [this->rozmiarX]{};
 	}
@@ -47,10 +52,10 @@ void Swiat::InitPole() {
 
 void Swiat::Rysuj() {
 	std::cout << "Piotr Wolinski - s180297\n";
+	std::cout << "Tura:  " << tura << std::endl;
 	for (int i = 0; i < this->rozmiarY; ++i) {
 		for (int j = 0; j < this->rozmiarX; ++j) {
 			if (pole[i][j] != NULL) {
-				//wywolaj metode danego organizmu
 				pole[i][j]->Rysowanie();
 			}
 			else {
@@ -125,13 +130,13 @@ void Swiat::OdswiezPole() {
 	}
 
 	for (int i = 0; i < zwierzeta.size(); ++i) {
-		if (zwierzeta[i]->GetStatus()) {
+		if (zwierzeta[i]->GetStan()) {
 			this->pole[zwierzeta[i]->GetY()][zwierzeta[i]->GetX()] = zwierzeta[i];
 		}
 	}
 
 	for (int i = 0; i < rosliny.size(); ++i) {
-		if (rosliny[i]->GetStatus()) {
+		if (rosliny[i]->GetStan()) {
 			this->pole[rosliny[i]->GetY()][rosliny[i]->GetX()] = rosliny[i];
 		}
 	}
@@ -221,18 +226,19 @@ void Swiat::DodajRosline(std::string klasa, int const newY, int const newX) {
 	}
 }
 
-
 void Swiat::UsunMartwe() {
 	for (int i = 0; i < zwierzeta.size(); ++i) {
-		if (zwierzeta[i]->GetStatus() == false) {
+		if (zwierzeta[i]->GetStan() == false) {
 			delete zwierzeta[i];
+			zwierzeta[i] = nullptr;
 			zwierzeta.erase(zwierzeta.begin() + i);
 		}
 	}
 
 	for (int i = 0; i < rosliny.size(); ++i) {
-		if (rosliny[i]->GetStatus() == false) {
+		if (rosliny[i]->GetStan() == false) {
 			delete rosliny[i];
+			rosliny[i] = nullptr;
 			rosliny.erase(rosliny.begin() + i);
 		}
 	}
@@ -264,36 +270,47 @@ void Swiat::WykonajTure() {
 
 	Skomentuj();
 
-	KolejnaTura();
+	ResetujRozmnazanie();
 }
 
-void Swiat::Input() {
+void Swiat::Symuluj() {
 	char i = ' ';
 	do {
 		if (this->tura == 0) {
-			std::cout << "Witam w projekcie pierwszym z Programowania Obiektowego. Ponizej krotki opis funkcjonalnosci:\n\n";
-			std::cout << "\tt - przechodzi do nastepnej tury.\n\n";
-			std::cout << "\tx - aktywuje specjalna umiejetnosc czlowieka.\n\n";
-			std::cout << "\tq - wyjscie z symulacji.\n\n";
-			std::cout << "\tp - wcisniecie p, a nastepnie podanie jednego z klawiszy wasd przypisze Czlowiekowi kierunek ruchu na najblizsza ture.\n\n";
-			std::cout << "\tz - zapis aktualnego stanu symulacji do pliku.\n\n";
-			std::cout << "\tc - wczytanie ostatniego zapisu symulacji i nadpisanie aktualnego stanu symulacji.\n\n";
 			std::cout << "\tPoczatkowy stan planszy: \n\n";
 
 			Rysuj();
 
 			std::cout << "Nacisnij klawisz t i enter, zeby przejsc do symulacji\n";
 		}
+		KolejnaTura();
 
 		i = ' ';
 		while (i != 't') {
 
 			std::cin >> i;
 
-			if (i == 'p' && this->czlowiek->GetStatus() == true) {
+			if (i == 'p' && this->czlowiek->GetStan() == true) {
 				char tmp = ' ';
-				std::cin >> tmp;
+				/*std::cin >> tmp;*/
 
+				if (_getch() == 224) { 
+					tmp = _getch();
+					switch (tmp) {
+					case DO_GORY:
+						tmp = 'w';
+						break;
+					case W_PRAWO:
+						tmp = 'd';
+						break;
+					case W_DOL:
+						tmp = 's';
+						break;
+					case W_LEWO:
+						tmp = 'a';
+						break;
+					}
+				}
 				dynamic_cast<Czlowiek*>(this->czlowiek)->SetInput(tmp);
 			}
 			else if (i == 'x') {
@@ -308,7 +325,10 @@ void Swiat::Input() {
 			else if (i == 'q') break;
 		}
 
-		WykonajTure();
+		if (i != 'q') {
+			WykonajTure();
+		}
+
 	} while (i != 'q');
 }
 
@@ -341,8 +361,7 @@ void Swiat::SetRozmiarY(const int Y) {
 	this->rozmiarY = Y;
 }
 
-void Swiat::KolejnaTura() {
-	this->tura++;
+void Swiat::ResetujRozmnazanie() {
 
 	for (int i = 0; i < zwierzeta.size(); ++i) {
 		zwierzeta[i]->SetRozmnozylSie(false);
@@ -370,6 +389,10 @@ void Swiat::DodajKomentarz(std::string komentarz) {
 	this->komentarze.push_back(komentarz);
 }
 
+void Swiat::KolejnaTura() {
+	this->tura++;
+}
+
 void Swiat::Skomentuj() {
 	for (int i = 0; i < komentarze.size(); ++i) {
 		if (komentarze[i] != "") {
@@ -388,21 +411,13 @@ void Swiat::Zapisz() {
 	out << rozmiarY << " " << rozmiarX << " " << tura << std::endl;
 	out << zwierzeta.size() << std::endl;
 	for (int i = 0; i < zwierzeta.size(); ++i) {
-		out << zwierzeta[i]->GetSymbol() << " " << zwierzeta[i]->GetX() << " " << zwierzeta[i]->GetY() << " " 
-			<< zwierzeta[i]->GetSila() << " " << zwierzeta[i]->GetWiek() << " " << zwierzeta[i]->GetLastX() << " " << zwierzeta[i]->GetLastY() << " "
-			<< zwierzeta[i]->GetStatus() << " " << zwierzeta[i]->GetRozmnozylSie() << std::endl;
+		out << zwierzeta[i]->ToString() << std::endl;
 	}
 
 	out << rosliny.size() << std::endl;
 	for (int i = 0; i < rosliny.size(); ++i) {
-		out << rosliny[i]->GetSymbol() << " " << rosliny[i]->GetX() << " " << rosliny[i]->GetY() << " "
-			<< rosliny[i]->GetSila() << " " << rosliny[i]->GetWiek() << " " << rosliny[i]->GetLastX() << " " << rosliny[i]->GetLastY() << " "
-			<< rosliny[i]->GetStatus() << " " << rosliny[i]->GetRozmnozylSie() << std::endl;
+		out << rosliny[i]->ToString() << std::endl;;
 	}
-
-	out << dynamic_cast<Czlowiek*>(this->czlowiek)->GetUmiejetnosc() << std::endl << dynamic_cast<Czlowiek*>(this->czlowiek)->GetIleAktywna() << " "
-		<< dynamic_cast<Czlowiek*>(this->czlowiek)->GetKiedyReset() << std::endl << dynamic_cast<Czlowiek*>(this->czlowiek)->GetLastInput() << " "
-		<< dynamic_cast<Czlowiek*>(this->czlowiek)->GetInput() << std::endl;
 
 	out.close();
 }
@@ -417,29 +432,30 @@ void Swiat::Wczytaj() {
 	in >> this->rozmiarX >> this->rozmiarY >> this->tura;
 	int zwierzeta_size = 0;
 	in >> zwierzeta_size;
+	/*zwierzeta.resize(zwierzeta_size);*/
 
 	for (int i = 0; i < zwierzeta_size; ++i) {
-		char gatunek;
+		int gatunek = 0;
 		int tmpX = 0;
 		int tmpY = 0;
 		in >> gatunek >> tmpX >> tmpY; 
 		switch (gatunek) {
-		case 'W':
+		case 87:
 			zwierzeta.push_back(new Wilk(tmpY, tmpX));
 			break;
-		case 'O':
+		case 79:
 			zwierzeta.push_back(new Owca(tmpY, tmpX));
 			break;
-		case 'L':
+		case 76:
 			zwierzeta.push_back(new Lis(tmpY, tmpX));
 			break;
-		case 'Z':
+		case 90:
 			zwierzeta.push_back(new Zolw(tmpY, tmpX));
 			break;
-		case 'A':
+		case 65:
 			zwierzeta.push_back(new Antylopa(tmpY, tmpX));
 			break;
-		case 'C':
+		case 67:
 			zwierzeta.push_back(new Czlowiek(tmpY, tmpX));
 			this->czlowiek = zwierzeta[i];
 			break;
@@ -448,40 +464,54 @@ void Swiat::Wczytaj() {
 		int wiek = 0;
 		int lastX = 0;
 		int lastY = 0;
-		bool zywy = true;
-		bool rozmnozylSie = false;
+		int zywy = 1;
+		int rozmnozylSie = 0;
 		in >> sila >> wiek >> lastX >> lastY >> zywy >> rozmnozylSie;
 		zwierzeta[i]->SetSila(sila);
 		zwierzeta[i]->SetWiek(wiek);
 		zwierzeta[i]->SetLastX(lastX);
 		zwierzeta[i]->SetLastY(lastY);
-		zwierzeta[i]->SetStatus(zywy);
+		zwierzeta[i]->SetStan(zywy);
 		zwierzeta[i]->SetRozmnozylSie(rozmnozylSie);
 		zwierzeta[i]->SetSwiat(this);
+		if (gatunek == 67) {
+			int umiejetnosc = 0;
+			int ileAktywna = 0;
+			int kiedyReset = 0;
+			int lastInput = 0;
+			int input = 0;
+			in >> umiejetnosc >> ileAktywna >> kiedyReset >> lastInput >> input;
+			dynamic_cast<Czlowiek*>(this->czlowiek)->SetUmiejetnosc(umiejetnosc);
+			dynamic_cast<Czlowiek*>(this->czlowiek)->SetIleAktywna(ileAktywna);
+			dynamic_cast<Czlowiek*>(this->czlowiek)->SetKiedyReset(kiedyReset);
+			dynamic_cast<Czlowiek*>(this->czlowiek)->SetLastInput((char)lastInput);
+			dynamic_cast<Czlowiek*>(this->czlowiek)->SetInput((char)input);
+		}
 	}
 
 	int rosliny_size = 0;
 	in >> rosliny_size;
+	/*rosliny.resize(rosliny_size);*/
 
 	for (int i = 0; i < rosliny_size; ++i) {
-		char gatunek;
+		int gatunek = 0;
 		int tmpX = 0;
 		int tmpY = 0;
 		in >> gatunek >> tmpX >> tmpY;
 		switch (gatunek) {
-		case 'T':
+		case 84:
 			rosliny.push_back(new Trawa(tmpY, tmpX));
 			break;
-		case 'M':
+		case 77:
 			rosliny.push_back(new Mlecz(tmpY, tmpX));
 			break;
-		case 'G':
+		case 71:
 			rosliny.push_back(new Guarana(tmpY, tmpX));
 			break;
-		case 'J':
+		case 74:
 			rosliny.push_back(new WilczeJagody(tmpY, tmpX));
 			break;
-		case 'B':
+		case 66:
 			rosliny.push_back(new BarszczSosnowskiego(tmpY, tmpX));
 			break;
 		}
@@ -489,29 +519,18 @@ void Swiat::Wczytaj() {
 		int wiek = 0;
 		int lastX = 0;
 		int lastY = 0;
-		bool zywy = true;
-		bool rozmnozylSie = false;
+		int zywy = 1;
+		int rozmnozylSie = 0;
 		in >> sila >> wiek >> lastX >> lastY >> zywy >> rozmnozylSie;
 		rosliny[i]->SetSila(sila);
 		rosliny[i]->SetWiek(wiek);
 		rosliny[i]->SetLastX(lastX);
 		rosliny[i]->SetLastY(lastY);
-		rosliny[i]->SetStatus(zywy);
+		rosliny[i]->SetStan(zywy);
 		rosliny[i]->SetRozmnozylSie(rozmnozylSie);
 		rosliny[i]->SetSwiat(this);
 	}
-	bool umiejetnosc = false;
-	int ileAktywna = 0;
-	int kiedyReset = 0;
-	char lastInput = ' ';
-	char input = ' ';
-	in >> umiejetnosc >> ileAktywna >> kiedyReset >> lastInput >> input;
-	dynamic_cast<Czlowiek*>(this->czlowiek)->SetUmiejetnosc(umiejetnosc);
-	dynamic_cast<Czlowiek*>(this->czlowiek)->SetIleAktywna(ileAktywna);
-	dynamic_cast<Czlowiek*>(this->czlowiek)->SetKiedyReset(kiedyReset);
-	dynamic_cast<Czlowiek*>(this->czlowiek)->SetLastInput(lastInput);
-	dynamic_cast<Czlowiek*>(this->czlowiek)->SetInput(input);
-
+	
 	InitPole();
 
 	SortujZwierzeta();
@@ -519,6 +538,9 @@ void Swiat::Wczytaj() {
 
 	OdswiezPole();
 
+	system("cls");
+
+	Rysuj();
 
 	in.close();
 }
@@ -532,7 +554,7 @@ void Swiat::WyczyscDane() {
 		delete zwierzeta[i];
 	}
 	zwierzeta.clear();
-	zwierzeta.shrink_to_fit();
+	/*zwierzeta.shrink_to_fit();*/
 
 	for (int i = 0; i < rosliny.size(); ++i) {
 		delete rosliny[i];
@@ -541,7 +563,7 @@ void Swiat::WyczyscDane() {
 	rosliny.shrink_to_fit();
 
 	komentarze.clear();
-	komentarze.shrink_to_fit();
+	/*komentarze.shrink_to_fit();*/
 
 	for (int i = 0; i < rozmiarY; ++i) {
 		delete[] pole[i];

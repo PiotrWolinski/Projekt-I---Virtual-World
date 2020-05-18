@@ -12,7 +12,7 @@ Czlowiek::Czlowiek(int Y, int X) {
 	this->sila = 5;
 	this->inicjatywa = 4;
 	this->wiek = 1;
-	this->zywy = true;
+	this->stan = true;
 	this->lastX = X;
 	this->lastY = Y;
 	this->rozmnozylSie = false;
@@ -74,6 +74,10 @@ void Czlowiek::Umiejetnosc() {
 	else {
 		if (kiedyReset > 0) kiedyReset--;
 	}
+}
+
+void  Czlowiek::SetStatus(bool status) {
+	this->stan = status;
 }
 
 void Czlowiek::SetInput(char input) {
@@ -146,4 +150,13 @@ void Czlowiek::Ruch(char dir) {
 		}
 		break;
 	}
+}
+
+std::string Czlowiek::ToString() {
+	std::string out;
+	out = std::to_string(symbol) + " " + std::to_string(X) + " " + std::to_string(Y) + " " + std::to_string(sila) + " "
+		+ std::to_string(wiek) + " " + std::to_string(lastX) + " " + std::to_string(lastY) + " " + std::to_string(stan) + " " 
+		+ std::to_string(rozmnozylSie) + " " + std::to_string(umiejetnosc) + " " + std::to_string(ileAktywna) + " " 
+		+ std::to_string(kiedyReset) + " " + std::to_string(lastInput) + " " + std::to_string(input);
+	return out;
 }

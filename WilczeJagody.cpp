@@ -9,10 +9,6 @@ WilczeJagody::WilczeJagody(int Y, int X) {
 	this->sila = 99;
 	this->inicjatywa = 0;
 	this->wiek = 1;
-	this->zywy = true;
+	this->stan = true;
 	this->rozmnozylSie = false;
-}
-
-void WilczeJagody::Rysowanie() {
-	std::cout << std::setw(2) << this->symbol << ' ';
 }

@@ -11,12 +11,6 @@
 #include "BarszczSosnowskiego.h"
 #include "Czlowiek.h"
 
-#define SPAWN_RATE_Z 20
-
-#define SPAWN_RATE_R 10
-
-#define ZASIEWANIE 10
-
 enum Organizmy {
 	WILK,
 	OWCA,

@@ -13,12 +13,8 @@ BarszczSosnowskiego::BarszczSosnowskiego(int Y, int X) {
 	this->sila = 10;
 	this->inicjatywa = 0;
 	this->wiek = 1;
-	this->zywy = true;
+	this->stan = true;
 	this->rozmnozylSie = false;
-}
-
-void BarszczSosnowskiego::Rysowanie() {
-	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void BarszczSosnowskiego::Akcja() {
@@ -29,7 +25,7 @@ void BarszczSosnowskiego::Akcja() {
 		if (!this->swiat->SprawdzCzyWolne(this->Y - 1, this->X) && 
 			this->swiat->GetOrganizmNaPolu(this->Y - 1, this->X)->GetInicjatywa() != 0) {
 			
-			swiat->GetOrganizmNaPolu(this->Y - 1, this->X)->SetStatus(false);
+			swiat->GetOrganizmNaPolu(this->Y - 1, this->X)->SetStan(MARTWY);
 
 			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zabil "
 				+ GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y - 1, this->X))).name())
@@ -40,7 +36,7 @@ void BarszczSosnowskiego::Akcja() {
 		if (!this->swiat->SprawdzCzyWolne(this->Y, this->X + 1) && 
 			this->swiat->GetOrganizmNaPolu(this->Y, this->X + 1)->GetInicjatywa() != 0){
 			
-			swiat->GetOrganizmNaPolu(this->Y, this->X + 1)->SetStatus(false);
+			swiat->GetOrganizmNaPolu(this->Y, this->X + 1)->SetStan(MARTWY);
 
 			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zabil "
 				+ GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y, this->X + 1))).name())
@@ -51,7 +47,7 @@ void BarszczSosnowskiego::Akcja() {
 		if (!this->swiat->SprawdzCzyWolne(this->Y + 1, this->X) 
 			&& this->swiat->GetOrganizmNaPolu(this->Y + 1, this->X)->GetInicjatywa() != 0) {
 			
-			swiat->GetOrganizmNaPolu(this->Y + 1, this->X)->SetStatus(false);
+			swiat->GetOrganizmNaPolu(this->Y + 1, this->X)->SetStan(MARTWY);
 
 			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zabil "
 				+ GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y + 1, this->X))).name())
@@ -63,7 +59,7 @@ void BarszczSosnowskiego::Akcja() {
 		if (!this->swiat->SprawdzCzyWolne(this->Y, this->X - 1) 
 			&& this->swiat->GetOrganizmNaPolu(this->Y, this->X - 1)->GetInicjatywa() != 0) {
 			
-			swiat->GetOrganizmNaPolu(this->Y, this->X - 1)->SetStatus(false);
+			swiat->GetOrganizmNaPolu(this->Y, this->X - 1)->SetStan(MARTWY);
 
 			komentarz = GetNazwaKlasy(typeid(*this).name()) + " zabil "
 				+ GetNazwaKlasy(typeid(*(this->swiat->GetOrganizmNaPolu(this->Y, this->X - 1))).name())
@@ -148,7 +144,7 @@ void BarszczSosnowskiego::Kolizja(Organizm* atakujacy) {
 	komentarz = wchodzacy + " probowal zjesc i nie dal rady " + na_polu + " na polu " 
 		+ std::to_string(this->GetX()) + " " + std::to_string(this->GetY());
 
-	atakujacy->SetStatus(false);
+	atakujacy->SetStan(MARTWY);
 
 	this->swiat->DodajKomentarz(komentarz);
 }

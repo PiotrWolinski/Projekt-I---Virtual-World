@@ -12,12 +12,8 @@ Mlecz::Mlecz(int Y, int X) {
 	this->sila = 0;
 	this->inicjatywa = 0;
 	this->wiek = 1;
-	this->zywy = true;
+	this->stan = true;
 	this->rozmnozylSie = false;
-}
-
-void Mlecz::Rysowanie() {
-	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Mlecz::Akcja() {

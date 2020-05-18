@@ -5,7 +5,5 @@ class WilczeJagody :
 {
 public:
 	WilczeJagody(int Y, int X);
-
-	void Rysowanie();
 };
 

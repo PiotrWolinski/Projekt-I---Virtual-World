@@ -5,7 +5,5 @@ class Wilk :
 {
 public:
 	Wilk(int Y, int X);
-
-	void Rysowanie();
 };
 

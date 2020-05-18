@@ -9,5 +9,6 @@ public:
 
 	void Kolizja(Organizm* org);
 
+	void Rysowanie();
 };
 

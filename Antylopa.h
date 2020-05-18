@@ -6,10 +6,8 @@ class Antylopa :
 public:
 	Antylopa(int Y, int X);
 
-	void Rysowanie();
+	void Akcja() override;
 
-	void Akcja();
-
-	void Kolizja(Organizm* atakujacy);
+	void Kolizja(Organizm* atakujacy) override;
 };
 

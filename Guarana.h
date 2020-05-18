@@ -6,7 +6,5 @@ class Guarana :
 public:
 	Guarana(int Y, int X);
 
-	void Rysowanie();
-
-	void Kolizja(Organizm* org);
+	void Kolizja(Organizm* org) override;
 };

@@ -6,8 +6,6 @@ class Mlecz :
 public:
 	Mlecz(int Y, int X);
 
-	void Akcja();
-
-	void Rysowanie();
+	void Akcja() override;
 };
 

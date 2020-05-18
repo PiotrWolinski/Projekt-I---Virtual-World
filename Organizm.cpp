@@ -56,12 +56,12 @@ void Organizm::SetWiek(int wiek) {
 	this->wiek = wiek;
 }
 
-bool Organizm::GetStatus() const {
-	return this->zywy;
+bool Organizm::GetStan() const {
+	return this->stan;
 }
 
-void Organizm::SetStatus(bool const status) {
-	this->zywy = status;
+void Organizm::SetStan(bool const status) {
+	this->stan = status;
 }
 
 void Organizm::SetLastX(int const X) {
@@ -94,4 +94,13 @@ std::string Organizm::GetNazwaKlasy(std::string nazwa) {
 	ss >> slowo;
 	ss >> slowo;
 	return slowo;
+}
+
+std::string Organizm::ToString() {
+	std::string out;
+	out = std::to_string(symbol) + " " + std::to_string(X) + " " + std::to_string(Y) + " " + std::to_string(sila) + " " 
+		+ std::to_string(wiek) + " " + std::to_string(lastX) + " " + std::to_string(lastY) + " " + std::to_string(stan)+ " " 
+		+ std::to_string(rozmnozylSie);
+
+	return out;
 }

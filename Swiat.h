@@ -1,6 +1,7 @@
 #pragma once
 #include "Organizm.h"
 #include "Wspolrzedne.h"
+#include "Definicje.h"
 
 #include <string>
 #include <vector>
@@ -33,6 +34,8 @@ class Swiat
 	
 	void UsunMartwe();
 
+	void ResetujRozmnazanie();
+
 	void KolejnaTura();
 
 	void Skomentuj();
@@ -45,6 +48,8 @@ class Swiat
 
 	void InitPole();
 
+	void InitSwiat();
+
 public:
 	Swiat(int const rozmiarX, int const rozmiarY);
 
@@ -56,7 +61,7 @@ public:
 
 	int GetRozmiarX() const;
 
-	void Input();
+	void Symuluj();
 
 	int GetTura() const;
 

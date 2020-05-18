@@ -11,15 +11,11 @@ Zolw::Zolw(int Y, int X) {
 	this->sila = 2;
 	this->inicjatywa = 1;
 	this->wiek = 1;
-	this->zywy = true;
+	this->stan = true;
 	this->rozmnozylSie = false;
 
 	SetLastX(this->X);
 	SetLastY(this->Y);
-}
-
-void Zolw::Rysowanie() {
-	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Zolw::Akcja() {
@@ -70,7 +66,7 @@ void Zolw::Kolizja(Organizm* atakujacy) {
 	if (na_polu != wchodzacy) {
 
 		if (atakujacy->GetSila() < this->GetSila()) {
-			atakujacy->SetStatus(false);
+			atakujacy->SetStan(MARTWY);
 
 			komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na polu "
 				+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
@@ -83,7 +79,7 @@ void Zolw::Kolizja(Organizm* atakujacy) {
 				+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
 		}
 		else if (atakujacy->GetSila() >= 5) {
-			this->zywy = false;
+			this->stan = MARTWY;
 
 			komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + " na polu "
 				+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());

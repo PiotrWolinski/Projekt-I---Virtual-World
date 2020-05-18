@@ -11,15 +11,11 @@ Lis::Lis(int Y, int X) {
 	this->sila = 3;
 	this->inicjatywa = 7;
 	this->wiek = 1;
-	this->zywy = true;
+	this->stan = true;
 	this->rozmnozylSie = false;
 
 	SetLastX(this->X);
 	SetLastY(this->Y);
-}
-
-void Lis::Rysowanie() {
-	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Lis::Akcja() {

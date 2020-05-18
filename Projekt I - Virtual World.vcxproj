@@ -170,6 +170,7 @@
     <ClInclude Include="Owca.h" />
     <ClInclude Include="Roslina.h" />
     <ClInclude Include="SpawnRate.cpp" />
+    <ClInclude Include="Definicje.h" />
     <ClInclude Include="Swiat.h" />
     <ClInclude Include="Trawa.h" />
     <ClInclude Include="WilczeJagody.h" />

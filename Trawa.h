@@ -5,7 +5,5 @@ class Trawa :
 {
 public:
 	Trawa(int Y, int X);
-
-	void Rysowanie();
 };
 

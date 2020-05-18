@@ -6,10 +6,8 @@ class Zolw :
 public:
 	Zolw(int Y, int X);
 
-	void Rysowanie();
+	void Kolizja(Organizm* atakujacy) override;
 
-	void Kolizja(Organizm* atakujacy);
-
-	void Akcja();
+	void Akcja() override;
 };
 

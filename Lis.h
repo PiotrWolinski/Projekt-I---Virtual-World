@@ -6,8 +6,6 @@ class Lis :
 public:
 	Lis(int Y, int X);
 
-	void Rysowanie();
-
-	void Akcja();
+	void Akcja() override;
 };
 

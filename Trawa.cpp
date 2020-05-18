@@ -9,10 +9,6 @@ Trawa::Trawa(int Y, int X) {
 	this->sila = 0;
 	this->inicjatywa = 0;
 	this->wiek = 1;
-	this->zywy = true;
+	this->stan = true;
 	this->rozmnozylSie = false;
-}
-
-void Trawa::Rysowanie() {
-	std::cout << std::setw(2) << this->symbol << ' ';
 }

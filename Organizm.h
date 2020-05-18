@@ -13,7 +13,7 @@ protected:
 	Swiat *swiat;
 	int X;
 	int Y;
-	bool zywy;
+	bool stan;
 	int lastX;
 	int lastY;
 	bool rozmnozylSie;
@@ -51,9 +51,9 @@ public:
 
 	void SetWiek(int const wiek);
 
-	bool GetStatus() const;
+	bool GetStan() const;
 
-	void SetStatus(const bool status);
+	void SetStan(const bool status);
 
 	int GetLastX() const;
 
@@ -68,5 +68,7 @@ public:
 	void SetRozmnozylSie(bool const rozmnozylSie);
 
 	std::string GetNazwaKlasy(std::string nazwa);
+
+	virtual std::string ToString();
 };
 

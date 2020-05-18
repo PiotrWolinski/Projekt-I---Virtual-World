@@ -7,6 +7,7 @@
 #include <typeinfo>
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 void Roslina::Akcja() {
 	int rozmnoz_sie = rand() % 100;
@@ -74,6 +75,10 @@ void Roslina::Akcja() {
 	}
 }
 
+void Roslina::Rysowanie() {
+	std::cout << std::setw(2) << this->symbol << ' ';
+}
+
 void Roslina::Kolizja(Organizm* atakujacy) {
 
 	std::string komentarz = "";
@@ -83,13 +88,13 @@ void Roslina::Kolizja(Organizm* atakujacy) {
 	std::string wchodzacy = GetNazwaKlasy(typeid(*atakujacy).name());
 
 	if (atakujacy->GetSila() >= this->GetSila()) {
-		this->zywy = false;
+		this->stan = MARTWY;
 
 		komentarz = wchodzacy + " zjadl " + na_polu + " na polu " 
 			+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());
 	}
 	else if (atakujacy->GetSila() < this->GetSila()) {
-		atakujacy->SetStatus(false);
+		atakujacy->SetStan(MARTWY);
 
 		komentarz = wchodzacy + " zostal zabity przez " + na_polu + " na polu "
 			+ std::to_string(this->GetX()) + ' ' + std::to_string(this->GetY());

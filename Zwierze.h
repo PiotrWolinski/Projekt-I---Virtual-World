@@ -5,10 +5,12 @@ class Zwierze :
 	public Organizm
 {
 public:
-	void Akcja();
+	virtual void Akcja();
 
-	void Kolizja(Organizm* org);
+	virtual void Kolizja(Organizm* org);
 
-	void RozmnozSie(Organizm* org);
+	virtual void RozmnozSie(Organizm* org);
+
+	void Rysowanie();
 };
 

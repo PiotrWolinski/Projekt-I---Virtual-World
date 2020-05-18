@@ -24,6 +24,8 @@ public:
 
 	void Ruch(char dir);
 
+	void SetStatus(bool status);
+
 	void SetInput(char input);
 
 	char GetInput() const;
@@ -43,5 +45,7 @@ public:
 	void SetKiedyReset(int kiedyReset);
 
 	int GetKiedyReset() const;
+
+	std::string ToString() override;
 };
 

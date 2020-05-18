@@ -6,6 +6,7 @@
 #include <typeinfo>
 #include <string>
 #include <iostream>
+#include <iomanip>
 
 void Zwierze::Akcja() {
 	bool moved = false;
@@ -49,12 +50,12 @@ void Zwierze::Kolizja(Organizm* atakujacy) {
 
 	if (na_polu != wchodzacy) {
 		if (this->GetSila() <= atakujacy->GetSila()) {
-			this->zywy = false;
+			this->stan = MARTWY;
 			komentarz = wchodzacy + " zaatakowal i zabil " + na_polu + ' ' + std::to_string(this->GetX()) 
 				+ ' ' + std::to_string(this->GetY());
 		}
 		else if (this->GetSila() > atakujacy->GetSila()) {
-			atakujacy->SetStatus(false);
+			atakujacy->SetStan(MARTWY);
 			komentarz = wchodzacy + " zaatakowal i zostal zabity przez " + na_polu + " na polu " + std::to_string(this->GetX())
 				+ ' ' + std::to_string(this->GetY());
 		}
@@ -68,6 +69,10 @@ void Zwierze::Kolizja(Organizm* atakujacy) {
 		atakujacy->SetX(atakujacy->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
 		atakujacy->SetY(atakujacy->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
 	}
+}
+
+void Zwierze::Rysowanie() {
+	std::cout << std::setw(2) << this->symbol << ' ';
 }
 
 void Zwierze::RozmnozSie(Organizm* wchodzacy) {
