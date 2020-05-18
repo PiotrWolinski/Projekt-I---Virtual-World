@@ -298,16 +298,16 @@ void Swiat::Symuluj() {
 					tmp = _getch();
 					switch (tmp) {
 					case DO_GORY:
-						tmp = 'w';
+						tmp = DO_GORY;
 						break;
 					case W_PRAWO:
-						tmp = 'd';
+						tmp = W_PRAWO;
 						break;
 					case W_DOL:
-						tmp = 's';
+						tmp = W_DOL;
 						break;
 					case W_LEWO:
-						tmp = 'a';
+						tmp = W_LEWO;
 						break;
 					}
 				}
@@ -353,11 +353,11 @@ int Swiat::GetRozmiarY() const {
 	return this->rozmiarY;
 }
 
-void Swiat::SetRozmiarX(const int X) {
+void Swiat::SetRozmiarX(int const X) {
 	this->rozmiarX = X;
 }
 
-void Swiat::SetRozmiarY(const int Y) {
+void Swiat::SetRozmiarY(int const Y) {
 	this->rozmiarY = Y;
 }
 
@@ -432,7 +432,6 @@ void Swiat::Wczytaj() {
 	in >> this->rozmiarX >> this->rozmiarY >> this->tura;
 	int zwierzeta_size = 0;
 	in >> zwierzeta_size;
-	/*zwierzeta.resize(zwierzeta_size);*/
 
 	for (int i = 0; i < zwierzeta_size; ++i) {
 		int gatunek = 0;
@@ -491,7 +490,6 @@ void Swiat::Wczytaj() {
 
 	int rosliny_size = 0;
 	in >> rosliny_size;
-	/*rosliny.resize(rosliny_size);*/
 
 	for (int i = 0; i < rosliny_size; ++i) {
 		int gatunek = 0;
@@ -554,7 +552,6 @@ void Swiat::WyczyscDane() {
 		delete zwierzeta[i];
 	}
 	zwierzeta.clear();
-	/*zwierzeta.shrink_to_fit();*/
 
 	for (int i = 0; i < rosliny.size(); ++i) {
 		delete rosliny[i];
@@ -563,7 +560,6 @@ void Swiat::WyczyscDane() {
 	rosliny.shrink_to_fit();
 
 	komentarze.clear();
-	/*komentarze.shrink_to_fit();*/
 
 	for (int i = 0; i < rozmiarY; ++i) {
 		delete[] pole[i];

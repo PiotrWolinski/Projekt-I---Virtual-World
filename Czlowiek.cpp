@@ -68,7 +68,7 @@ void Czlowiek::Umiejetnosc() {
 
 		if (ileAktywna == 0) {
 			umiejetnosc = false;
-			kiedyReset = 5;
+			kiedyReset = TUR_DO_RESETU_UMIEJETNOSCI;
 		}
 	}
 	else {
@@ -123,28 +123,28 @@ int Czlowiek::GetKiedyReset() const {
 void Czlowiek::Aktywuj() {
 	if (ileAktywna == 0 && kiedyReset == 0) {
 		umiejetnosc = true;
-		ileAktywna = 5;
+		ileAktywna = CZAS_DZIALANIA_UMIEJETNOSCI;
 	}
 }
 
 void Czlowiek::Ruch(char dir) {
 	switch (dir) {
-	case 'w':
+	case DO_GORY:
 		if (this->Y > 0) {
 			this->Y--;
 		}
 		break;
-	case 'd':
+	case W_PRAWO:
 		if (this->X < this->swiat->GetRozmiarX() - 1) {
 			this->X++;
 		}
 		break;
-	case 's':
+	case W_DOL:
 		if (this->Y < this->swiat->GetRozmiarY() - 1) {
 			this->Y++;
 		}
 		break;
-	case 'a':
+	case W_LEWO:
 		if (this->X > 0) {
 			this->X--;
 		}
