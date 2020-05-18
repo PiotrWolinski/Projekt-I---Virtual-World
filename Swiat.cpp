@@ -13,10 +13,7 @@
 
 Swiat::Swiat(int const rozmiarX, int const rozmiarY): rozmiarX(rozmiarX), rozmiarY(rozmiarY)
 {
-	this->pole = new Organizm**[this->rozmiarY];
-	for (int i = 0; i < this->rozmiarY; ++i) {
-		this->pole[i] = new Organizm * [this->rozmiarX]{};
-	}
+	InitPole();
 
 	this->czlowiek = new Czlowiek(rand() % this->rozmiarY, rand() % this->rozmiarX);
 	this->czlowiek->SetSwiat(this);
@@ -39,6 +36,13 @@ Swiat::Swiat(int const rozmiarX, int const rozmiarY): rozmiarX(rozmiarX), rozmia
 	
 	SortujZwierzeta();
 	SortujRosliny();
+}
+
+void Swiat::InitPole() {
+	this->pole = new Organizm * *[this->rozmiarY];
+	for (int i = 0; i < this->rozmiarY; ++i) {
+		this->pole[i] = new Organizm * [this->rozmiarX]{};
+	}
 }
 
 void Swiat::Rysuj() {
@@ -298,6 +302,9 @@ void Swiat::Input() {
 			else if (i == 'z') {
 				Zapisz();
 			}
+			else if (i == 'c') {
+				Wczytaj();
+			}
 			else if (i == 'q') break;
 		}
 
@@ -505,7 +512,15 @@ void Swiat::Wczytaj() {
 	dynamic_cast<Czlowiek*>(this->czlowiek)->SetLastInput(lastInput);
 	dynamic_cast<Czlowiek*>(this->czlowiek)->SetInput(input);
 
+	InitPole();
 
+	SortujZwierzeta();
+	SortujRosliny();
+
+	OdswiezPole();
+
+
+	in.close();
 }
 
 Swiat::~Swiat() {

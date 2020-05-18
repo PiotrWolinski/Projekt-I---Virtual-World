@@ -43,6 +43,8 @@ class Swiat
 
 	void WyczyscDane();
 
+	void InitPole();
+
 public:
 	Swiat(int const rozmiarX, int const rozmiarY);
 
