@@ -62,7 +62,8 @@ void Czlowiek::Umiejetnosc() {
 		
 		ileAktywna--;
 
-		std::string komentarz = "Moja specjalna umiejetnosc jest teraz aktywna i bedzie jeszcze przez " + std::to_string(ileAktywna) + " tury!";
+		std::string komentarz = "Moja specjalna umiejetnosc jest teraz aktywna i bedzie jeszcze przez " 
+			+ std::to_string(ileAktywna) + " tury!";
 
 		this->swiat->DodajKomentarz(komentarz);
 

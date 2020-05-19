@@ -48,8 +48,6 @@ class Swiat
 
 	void InitPole();
 
-	void InitSwiat();
-
 public:
 	Swiat(int const rozmiarX, int const rozmiarY);
 

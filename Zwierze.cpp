@@ -62,12 +62,12 @@ void Zwierze::Kolizja(Organizm* atakujacy) {
 
 		this->swiat->DodajKomentarz(komentarz);
 	}
-	else if (na_polu == wchodzacy && this != atakujacy) { // rozmnazanie
+	else if (na_polu == wchodzacy && this != atakujacy) { 
 
 		this->RozmnozSie(atakujacy);
 
-		atakujacy->SetX(atakujacy->GetLastX());		// organizm, ktory wszedl na pole z takim samym organizmem wroci na swoje poprzednie pole,
-		atakujacy->SetY(atakujacy->GetLastY());		// a na polu obok tych dwoch organizmow powstanie nowy
+		atakujacy->SetX(atakujacy->GetLastX());		
+		atakujacy->SetY(atakujacy->GetLastY());		
 	}
 }
 

@@ -33,14 +33,10 @@ Swiat::Swiat(int const rozmiarY, int const rozmiarX): rozmiarY(rozmiarY), rozmia
 		rosliny[i]->SetSwiat(this);
 	}
 
-	this->tura = 0;
+	this->tura = 1;
 	
 	SortujZwierzeta();
 	SortujRosliny();
-}
-
-void Swiat::InitSwiat() {
-
 }
 
 void Swiat::InitPole() {
@@ -121,7 +117,6 @@ void Swiat::DodajOrganizmy() {
 	}
 }
 
-// metoda zmienia wskazniki na polu
 void Swiat::OdswiezPole() {
 	for (int i = 0; i < this->rozmiarY; ++i) {
 		for (int j = 0; j < this->rozmiarX; ++j) {
@@ -276,14 +271,13 @@ void Swiat::WykonajTure() {
 void Swiat::Symuluj() {
 	char i = ' ';
 	do {
-		if (this->tura == 0) {
+		if (this->tura == 1) {
 			std::cout << "\tPoczatkowy stan planszy: \n\n";
 
 			Rysuj();
 
 			std::cout << "Nacisnij klawisz t i enter, zeby przejsc do symulacji\n";
 		}
-		KolejnaTura();
 
 		i = ' ';
 		while (i != 't') {
@@ -321,11 +315,13 @@ void Swiat::Symuluj() {
 			}
 			else if (i == 'c') {
 				Wczytaj();
+				break;
 			}
 			else if (i == 'q') break;
 		}
 
-		if (i != 'q') {
+		if (i != 'q' && i != 'c') {
+			KolejnaTura();
 			WykonajTure();
 		}
 
@@ -429,7 +425,7 @@ void Swiat::Wczytaj() {
 	std::ifstream in;
 	in.open("zapis.txt");
 
-	in >> this->rozmiarX >> this->rozmiarY >> this->tura;
+	in >> this->rozmiarY >> this->rozmiarX >> this->tura;
 	int zwierzeta_size = 0;
 	in >> zwierzeta_size;
 
@@ -539,6 +535,8 @@ void Swiat::Wczytaj() {
 	system("cls");
 
 	Rysuj();
+
+	Skomentuj();
 
 	in.close();
 }
