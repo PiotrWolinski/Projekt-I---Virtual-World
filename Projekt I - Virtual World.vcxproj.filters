@@ -21,9 +21,6 @@
     <ClCompile Include="Swiat.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
-    <ClCompile Include="Wspolrzedne.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
     <ClCompile Include="Organizm.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
@@ -34,9 +31,6 @@
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Czlowiek.cpp">
-      <Filter>Pliki źródłowe</Filter>
-    </ClCompile>
-    <ClCompile Include="Kontroler.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
     <ClCompile Include="Wilk.cpp">
@@ -74,9 +68,6 @@
     <ClInclude Include="Swiat.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Wspolrzedne.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="Organizm.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
@@ -89,14 +80,8 @@
     <ClInclude Include="Czlowiek.h">
       <Filter>Pliki nagłówkowe</Filter>
     </ClInclude>
-    <ClInclude Include="Kontroler.h">
-      <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
     <ClInclude Include="Organizmy.h">
       <Filter>Pliki nagłówkowe</Filter>
-    </ClInclude>
-    <ClInclude Include="SpawnRate.cpp">
-      <Filter>Pliki źródłowe</Filter>
     </ClInclude>
     <ClInclude Include="Wilk.h">
       <Filter>Pliki nagłówkowe</Filter>
